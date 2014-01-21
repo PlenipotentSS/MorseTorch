@@ -1,0 +1,506 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D211D7C3188DC1D600EA0A42 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D211D7C2188DC1D600EA0A42 /* Foundation.framework */; };
+		D211D7C5188DC1D600EA0A42 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D211D7C4188DC1D600EA0A42 /* CoreGraphics.framework */; };
+		D211D7C7188DC1D600EA0A42 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D211D7C6188DC1D600EA0A42 /* UIKit.framework */; };
+		D211D7CD188DC1D600EA0A42 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D211D7CB188DC1D600EA0A42 /* InfoPlist.strings */; };
+		D211D7CF188DC1D600EA0A42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7CE188DC1D600EA0A42 /* main.m */; };
+		D211D7D3188DC1D600EA0A42 /* SSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7D2188DC1D600EA0A42 /* SSAppDelegate.m */; };
+		D211D7D6188DC1D600EA0A42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D211D7D4188DC1D600EA0A42 /* Main.storyboard */; };
+		D211D7DB188DC1D600EA0A42 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D211D7DA188DC1D600EA0A42 /* Images.xcassets */; };
+		D211D7E2188DC1D600EA0A42 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D211D7E1188DC1D600EA0A42 /* XCTest.framework */; };
+		D211D7E3188DC1D600EA0A42 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D211D7C2188DC1D600EA0A42 /* Foundation.framework */; };
+		D211D7E4188DC1D600EA0A42 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D211D7C6188DC1D600EA0A42 /* UIKit.framework */; };
+		D211D7EC188DC1D600EA0A42 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D211D7EA188DC1D600EA0A42 /* InfoPlist.strings */; };
+		D211D7EE188DC1D600EA0A42 /* Morse_TorchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7ED188DC1D600EA0A42 /* Morse_TorchTests.m */; };
+		D211D7F9188DC34200EA0A42 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7F8188DC34100EA0A42 /* InputViewController.m */; };
+		D211D7FC188DC47A00EA0A42 /* NSString+MorseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */; };
+		D211D801188DC89E00EA0A42 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D800188DC89E00EA0A42 /* Constants.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D211D7E5188DC1D600EA0A42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D211D7B7188DC1D600EA0A42 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D211D7BE188DC1D600EA0A42;
+			remoteInfo = "Morse Torch";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D211D7BF188DC1D600EA0A42 /* Morse Torch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Morse Torch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D211D7C2188DC1D600EA0A42 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D211D7C4188DC1D600EA0A42 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D211D7C6188DC1D600EA0A42 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D211D7CA188DC1D600EA0A42 /* Morse Torch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Morse Torch-Info.plist"; sourceTree = "<group>"; };
+		D211D7CC188DC1D600EA0A42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D211D7CE188DC1D600EA0A42 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D211D7D0188DC1D600EA0A42 /* Morse Torch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Morse Torch-Prefix.pch"; sourceTree = "<group>"; };
+		D211D7D1188DC1D600EA0A42 /* SSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAppDelegate.h; sourceTree = "<group>"; };
+		D211D7D2188DC1D600EA0A42 /* SSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAppDelegate.m; sourceTree = "<group>"; };
+		D211D7D5188DC1D600EA0A42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D211D7DA188DC1D600EA0A42 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D211D7E0188DC1D600EA0A42 /* Morse TorchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Morse TorchTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D211D7E1188DC1D600EA0A42 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		D211D7E9188DC1D600EA0A42 /* Morse TorchTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Morse TorchTests-Info.plist"; sourceTree = "<group>"; };
+		D211D7EB188DC1D600EA0A42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D211D7ED188DC1D600EA0A42 /* Morse_TorchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Morse_TorchTests.m; sourceTree = "<group>"; };
+		D211D7F7188DC34100EA0A42 /* InputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputViewController.h; path = ../InputViewController.h; sourceTree = "<group>"; };
+		D211D7F8188DC34100EA0A42 /* InputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InputViewController.m; path = ../InputViewController.m; sourceTree = "<group>"; };
+		D211D7FA188DC47A00EA0A42 /* NSString+MorseCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MorseCode.h"; sourceTree = "<group>"; };
+		D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MorseCode.m"; sourceTree = "<group>"; };
+		D211D7FF188DC89E00EA0A42 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		D211D800188DC89E00EA0A42 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D211D7BC188DC1D600EA0A42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D211D7C5188DC1D600EA0A42 /* CoreGraphics.framework in Frameworks */,
+				D211D7C7188DC1D600EA0A42 /* UIKit.framework in Frameworks */,
+				D211D7C3188DC1D600EA0A42 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D211D7DD188DC1D600EA0A42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D211D7E2188DC1D600EA0A42 /* XCTest.framework in Frameworks */,
+				D211D7E4188DC1D600EA0A42 /* UIKit.framework in Frameworks */,
+				D211D7E3188DC1D600EA0A42 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D211D7B6188DC1D600EA0A42 = {
+			isa = PBXGroup;
+			children = (
+				D211D7C8188DC1D600EA0A42 /* Morse Torch */,
+				D211D7E7188DC1D600EA0A42 /* Morse TorchTests */,
+				D211D7C1188DC1D600EA0A42 /* Frameworks */,
+				D211D7C0188DC1D600EA0A42 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D211D7C0188DC1D600EA0A42 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D211D7BF188DC1D600EA0A42 /* Morse Torch.app */,
+				D211D7E0188DC1D600EA0A42 /* Morse TorchTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D211D7C1188DC1D600EA0A42 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D211D7C2188DC1D600EA0A42 /* Foundation.framework */,
+				D211D7C4188DC1D600EA0A42 /* CoreGraphics.framework */,
+				D211D7C6188DC1D600EA0A42 /* UIKit.framework */,
+				D211D7E1188DC1D600EA0A42 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D211D7C8188DC1D600EA0A42 /* Morse Torch */ = {
+			isa = PBXGroup;
+			children = (
+				D211D7D1188DC1D600EA0A42 /* SSAppDelegate.h */,
+				D211D7D2188DC1D600EA0A42 /* SSAppDelegate.m */,
+				D211D7D4188DC1D600EA0A42 /* Main.storyboard */,
+				D211D7DA188DC1D600EA0A42 /* Images.xcassets */,
+				D211D7FF188DC89E00EA0A42 /* Constants.h */,
+				D211D800188DC89E00EA0A42 /* Constants.m */,
+				D211D7FE188DC48C00EA0A42 /* Views */,
+				D211D7FD188DC48400EA0A42 /* Categories */,
+				D211D7C9188DC1D600EA0A42 /* Supporting Files */,
+			);
+			path = "Morse Torch";
+			sourceTree = "<group>";
+		};
+		D211D7C9188DC1D600EA0A42 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D211D7CA188DC1D600EA0A42 /* Morse Torch-Info.plist */,
+				D211D7CB188DC1D600EA0A42 /* InfoPlist.strings */,
+				D211D7CE188DC1D600EA0A42 /* main.m */,
+				D211D7D0188DC1D600EA0A42 /* Morse Torch-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D211D7E7188DC1D600EA0A42 /* Morse TorchTests */ = {
+			isa = PBXGroup;
+			children = (
+				D211D7ED188DC1D600EA0A42 /* Morse_TorchTests.m */,
+				D211D7E8188DC1D600EA0A42 /* Supporting Files */,
+			);
+			path = "Morse TorchTests";
+			sourceTree = "<group>";
+		};
+		D211D7E8188DC1D600EA0A42 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D211D7E9188DC1D600EA0A42 /* Morse TorchTests-Info.plist */,
+				D211D7EA188DC1D600EA0A42 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D211D7FD188DC48400EA0A42 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D211D7FA188DC47A00EA0A42 /* NSString+MorseCode.h */,
+				D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		D211D7FE188DC48C00EA0A42 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D211D7F7188DC34100EA0A42 /* InputViewController.h */,
+				D211D7F8188DC34100EA0A42 /* InputViewController.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D211D7BE188DC1D600EA0A42 /* Morse Torch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D211D7F1188DC1D600EA0A42 /* Build configuration list for PBXNativeTarget "Morse Torch" */;
+			buildPhases = (
+				D211D7BB188DC1D600EA0A42 /* Sources */,
+				D211D7BC188DC1D600EA0A42 /* Frameworks */,
+				D211D7BD188DC1D600EA0A42 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Morse Torch";
+			productName = "Morse Torch";
+			productReference = D211D7BF188DC1D600EA0A42 /* Morse Torch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D211D7DF188DC1D600EA0A42 /* Morse TorchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D211D7F4188DC1D600EA0A42 /* Build configuration list for PBXNativeTarget "Morse TorchTests" */;
+			buildPhases = (
+				D211D7DC188DC1D600EA0A42 /* Sources */,
+				D211D7DD188DC1D600EA0A42 /* Frameworks */,
+				D211D7DE188DC1D600EA0A42 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D211D7E6188DC1D600EA0A42 /* PBXTargetDependency */,
+			);
+			name = "Morse TorchTests";
+			productName = "Morse TorchTests";
+			productReference = D211D7E0188DC1D600EA0A42 /* Morse TorchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D211D7B7188DC1D600EA0A42 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SS;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Steven Stevenson";
+				TargetAttributes = {
+					D211D7DF188DC1D600EA0A42 = {
+						TestTargetID = D211D7BE188DC1D600EA0A42;
+					};
+				};
+			};
+			buildConfigurationList = D211D7BA188DC1D600EA0A42 /* Build configuration list for PBXProject "Morse Torch" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D211D7B6188DC1D600EA0A42;
+			productRefGroup = D211D7C0188DC1D600EA0A42 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D211D7BE188DC1D600EA0A42 /* Morse Torch */,
+				D211D7DF188DC1D600EA0A42 /* Morse TorchTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D211D7BD188DC1D600EA0A42 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D211D7DB188DC1D600EA0A42 /* Images.xcassets in Resources */,
+				D211D7CD188DC1D600EA0A42 /* InfoPlist.strings in Resources */,
+				D211D7D6188DC1D600EA0A42 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D211D7DE188DC1D600EA0A42 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D211D7EC188DC1D600EA0A42 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D211D7BB188DC1D600EA0A42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D211D801188DC89E00EA0A42 /* Constants.m in Sources */,
+				D211D7D3188DC1D600EA0A42 /* SSAppDelegate.m in Sources */,
+				D211D7F9188DC34200EA0A42 /* InputViewController.m in Sources */,
+				D211D7CF188DC1D600EA0A42 /* main.m in Sources */,
+				D211D7FC188DC47A00EA0A42 /* NSString+MorseCode.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D211D7DC188DC1D600EA0A42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D211D7EE188DC1D600EA0A42 /* Morse_TorchTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D211D7E6188DC1D600EA0A42 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D211D7BE188DC1D600EA0A42 /* Morse Torch */;
+			targetProxy = D211D7E5188DC1D600EA0A42 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D211D7CB188DC1D600EA0A42 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D211D7CC188DC1D600EA0A42 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D211D7D4188DC1D600EA0A42 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D211D7D5188DC1D600EA0A42 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D211D7EA188DC1D600EA0A42 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D211D7EB188DC1D600EA0A42 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D211D7EF188DC1D600EA0A42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D211D7F0188DC1D600EA0A42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D211D7F2188DC1D600EA0A42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Morse Torch/Morse Torch-Prefix.pch";
+				INFOPLIST_FILE = "Morse Torch/Morse Torch-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D211D7F3188DC1D600EA0A42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Morse Torch/Morse Torch-Prefix.pch";
+				INFOPLIST_FILE = "Morse Torch/Morse Torch-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D211D7F5188DC1D600EA0A42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Morse Torch.app/Morse Torch";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Morse Torch/Morse Torch-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Morse TorchTests/Morse TorchTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		D211D7F6188DC1D600EA0A42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Morse Torch.app/Morse Torch";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Morse Torch/Morse Torch-Prefix.pch";
+				INFOPLIST_FILE = "Morse TorchTests/Morse TorchTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D211D7BA188DC1D600EA0A42 /* Build configuration list for PBXProject "Morse Torch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D211D7EF188DC1D600EA0A42 /* Debug */,
+				D211D7F0188DC1D600EA0A42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D211D7F1188DC1D600EA0A42 /* Build configuration list for PBXNativeTarget "Morse Torch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D211D7F2188DC1D600EA0A42 /* Debug */,
+				D211D7F3188DC1D600EA0A42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D211D7F4188DC1D600EA0A42 /* Build configuration list for PBXNativeTarget "Morse TorchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D211D7F5188DC1D600EA0A42 /* Debug */,
+				D211D7F6188DC1D600EA0A42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D211D7B7188DC1D600EA0A42 /* Project object */;
+}
