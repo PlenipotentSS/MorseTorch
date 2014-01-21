@@ -15,6 +15,7 @@
 @interface InputViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputField;
 @property (weak, nonatomic) IBOutlet UILabel *morseText;
+@property (weak, nonatomic) IBOutlet UILabel *letterText;
 @property (weak, nonatomic) IBOutlet UIButton *transmitButton;
 @property (nonatomic) NSOperationQueue *torchQueue;
 @property (nonatomic) AVCaptureDevice *device;
@@ -42,6 +43,7 @@
     [self.torchQueue setMaxConcurrentOperationCount:1];
     
     self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 	
     // Do any additional setup after loading the view.
 }
@@ -56,21 +58,24 @@
 - (IBAction)transmitString:(id)sender {
     if (self.torchQueue.operationCount == 0) {
         [self setCancel];
-        NSArray* morse = [NSString getSymbolsFromString:self.inputField.text];
+        NSString *inputText =self.inputField.text;
+        NSArray* morse = [NSString getSymbolsFromString:inputText];
         NSString *morseString;
+        unichar charString;
         
+        NSUInteger counter = 0;
         for (NSString* code in morse) {
-            if (morseString) {
-                morseString = [NSString stringWithFormat:@"%@ %@",morseString,code];
-            } else {
-                morseString = code;
-            }
+            charString = [inputText characterAtIndex:counter] ;
+            morseString = code;
+            counter++;
+            
             for (NSUInteger i=0;i<[code length];i++) {
                 NSString *dotOrDash = [code substringWithRange:NSMakeRange(i, 1)];
                 
                 [self.torchQueue addOperationWithBlock:^{
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                         [self.morseText setText:morseString];
+                        [self.letterText setText:[NSString stringWithFormat:@"%c",charString]];
                     }];
                 }];
                 if ([dotOrDash isEqualToString:@"."]) {
@@ -151,17 +156,6 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     self.transmitButton.enabled = NO;
-    [self setDisabled];
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField  {
-    if ([textField.text length] == 0) {
-        self.transmitButton.enabled = NO;
-        [self setDisabled];
-    } else {
-        [self setTransmitting];
-        self.transmitButton.enabled = YES;
-    }
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -169,4 +163,26 @@
     return YES;
 }
 
+
+#pragma mark UITextFieldDidChange
+-(void)textFieldDidChange: (NSNotification *) notification {
+    [self switchDisabledToTransmit];
+}
+
+#pragma mark switch button
+-(void)switchDisabledToTransmit {
+    if ([self.inputField.text length] == 0) {
+        self.transmitButton.enabled = NO;
+        [self setDisabled];
+        [self.transmitButton setAlpha:.5f];
+    } else {
+        [self setTransmitting];
+        self.transmitButton.enabled = YES;
+        [self.transmitButton setAlpha:1.f];
+    }
+}
+
 @end
+
+
+

@@ -87,7 +87,8 @@
                                     @"6":SYMBOL_FOR_6,
                                     @"7":SYMBOL_FOR_7,
                                     @"8":SYMBOL_FOR_8,
-                                    @"9":SYMBOL_FOR_9};
+                                    @"9":SYMBOL_FOR_9
+                                    };
     return theDictionary;
 }
 

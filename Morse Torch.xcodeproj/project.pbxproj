@@ -23,6 +23,7 @@
 		D211D7F9188DC34200EA0A42 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7F8188DC34100EA0A42 /* InputViewController.m */; };
 		D211D7FC188DC47A00EA0A42 /* NSString+MorseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */; };
 		D211D801188DC89E00EA0A42 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D800188DC89E00EA0A42 /* Constants.m */; };
+		D29A2A0B188DF5E4009FA15E /* UIColor+MorseTorch.m in Sources */ = {isa = PBXBuildFile; fileRef = D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MorseCode.m"; sourceTree = "<group>"; };
 		D211D7FF188DC89E00EA0A42 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		D211D800188DC89E00EA0A42 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		D29A2A09188DF5E4009FA15E /* UIColor+MorseTorch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MorseTorch.h"; sourceTree = "<group>"; };
+		D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MorseTorch.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,8 @@
 			children = (
 				D211D7FA188DC47A00EA0A42 /* NSString+MorseCode.h */,
 				D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */,
+				D29A2A09188DF5E4009FA15E /* UIColor+MorseTorch.h */,
+				D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 				D211D801188DC89E00EA0A42 /* Constants.m in Sources */,
 				D211D7D3188DC1D600EA0A42 /* SSAppDelegate.m in Sources */,
 				D211D7F9188DC34200EA0A42 /* InputViewController.m in Sources */,
+				D29A2A0B188DF5E4009FA15E /* UIColor+MorseTorch.m in Sources */,
 				D211D7CF188DC1D600EA0A42 /* main.m in Sources */,
 				D211D7FC188DC47A00EA0A42 /* NSString+MorseCode.m in Sources */,
 			);
