@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *letterText;
 @property (weak, nonatomic) IBOutlet UIButton *transmitButton;
 @property (nonatomic) NSOperationQueue *torchQueue;
-@property (nonatomic) AVCaptureDevice *device;
 
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
@@ -45,7 +44,6 @@
     self.torchQueue.name = @"Torch Queue";
     [self.torchQueue setMaxConcurrentOperationCount:1];
     
-    self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 	
     // Do any additional setup after loading the view.
@@ -65,7 +63,6 @@
         NSString *validatedText = [NSString validateString:inputText];
         NSArray* morse = [NSString getSymbolsFromString:inputText];
         
-        
         SSNSOperation *op = [[SSNSOperation alloc] initWithMorseArray:morse andString:validatedText];
         op.delegate = self;
         [self.torchQueue addOperation:op];
@@ -74,7 +71,6 @@
                 [self setTransmitting];
             }];
         }];
-        NSLog(@"%lu",(unsigned long)self.torchQueue.operationCount);
     } else {
         [self.torchQueue cancelAllOperations];
         [self setTransmitting];
@@ -106,23 +102,6 @@
     [self.transmitButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [self.transmitButton setTintColor:[UIColor lightGrayColor]];
     self.transmitButton.enabled = NO;
-}
-
-#pragma mark - Torch Operations
--(void) engageTorch {
-    if ([self.device hasFlash]) {
-        [self.device lockForConfiguration:nil];
-        [self.device setTorchMode:AVCaptureTorchModeOn];  // use AVCaptureTorchModeOff to turn off
-        [self.device unlockForConfiguration];
-    }
-}
-
--(void) disengageTorch {
-    if ([self.device hasTorch]) {
-        [self.device lockForConfiguration:nil];
-        [self.device setTorchMode:AVCaptureTorchModeOff];  // use AVCaptureTorchModeOff to turn off
-        [self.device unlockForConfiguration];
-    }
 }
 
 #pragma mark - UITextFieldDelegate

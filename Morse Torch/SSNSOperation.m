@@ -24,11 +24,6 @@
     return self;
 }
 
--(void) addTextLabel: (UILabel*) textLabel andMorseLabel: (UILabel*) morseLabel {
-    self.textLabel = textLabel;
-    self.morseLabel = morseLabel;
-}
-
 -(void)main {
     NSUInteger counter = 0;
     unichar charString;

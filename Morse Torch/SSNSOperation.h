@@ -25,6 +25,4 @@
 @property (weak,atomic) UILabel *morseLabel;
 @property (strong) AVCaptureDevice *device;
 
--(void) addTextLabel: (UILabel*) textLabel andMorseLabel: (UILabel*) morseLabel;
-
 @end
