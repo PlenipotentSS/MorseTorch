@@ -9,16 +9,19 @@
 #import "InputViewController.h"
 #import "NSString+MorseCode.h"
 #import "UIColor+MorseTorch.h"
+#import "SSNSOperation.h"
 
 @import AVFoundation;
 
-@interface InputViewController () <UITextFieldDelegate>
+@interface InputViewController () <UITextFieldDelegate,SSNOperationDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputField;
 @property (weak, nonatomic) IBOutlet UILabel *morseText;
 @property (weak, nonatomic) IBOutlet UILabel *letterText;
 @property (weak, nonatomic) IBOutlet UIButton *transmitButton;
 @property (nonatomic) NSOperationQueue *torchQueue;
 @property (nonatomic) AVCaptureDevice *device;
+
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @end
 
@@ -59,56 +62,31 @@
     if (self.torchQueue.operationCount == 0) {
         [self setCancel];
         NSString *inputText =self.inputField.text;
+        NSString *validatedText = [NSString validateString:inputText];
         NSArray* morse = [NSString getSymbolsFromString:inputText];
-        NSString *morseString;
-        unichar charString;
         
-        NSUInteger counter = 0;
-        for (NSString* code in morse) {
-            charString = [inputText characterAtIndex:counter] ;
-            morseString = code;
-            counter++;
-            
-            for (NSUInteger i=0;i<[code length];i++) {
-                NSString *dotOrDash = [code substringWithRange:NSMakeRange(i, 1)];
-                
-                [self.torchQueue addOperationWithBlock:^{
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        [self.morseText setText:morseString];
-                        [self.letterText setText:[NSString stringWithFormat:@"%c",charString]];
-                    }];
-                }];
-                if ([dotOrDash isEqualToString:@"."]) {
-                    [self.torchQueue addOperationWithBlock:^{
-                        [self engageTorch];
-                        usleep(DOT_IN_MICROSEC);
-                        [self disengageTorch];
-                    }];
-                } else if ([dotOrDash isEqualToString:@"_"]) {
-                    [self.torchQueue addOperationWithBlock:^{
-                        [self engageTorch];
-                        usleep(DASH_IN_MICROSEC);
-                        [self disengageTorch];
-                    }];
-                }
-                [self.torchQueue addOperationWithBlock:^{
-                    usleep(LETTER_DELAY_IN_MICROSEC);
-                }];
-            }
-            [self.torchQueue addOperationWithBlock:^{
-                usleep(WORD_DELAY_IN_MICROSEC);
-            }];
-        }
         
+        SSNSOperation *op = [[SSNSOperation alloc] initWithMorseArray:morse andString:validatedText];
+        op.delegate = self;
+        [self.torchQueue addOperation:op];
         [self.torchQueue addOperationWithBlock:^{
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 [self setTransmitting];
             }];
         }];
+        NSLog(@"%lu",(unsigned long)self.torchQueue.operationCount);
     } else {
         [self.torchQueue cancelAllOperations];
         [self setTransmitting];
     }
+}
+
+#pragma mark - InputViewController.h
+- (void)updateTextLabelText:(NSString*) text andMorseLabelText: (NSString*)morseChar {
+    self.letterText.text = text;
+    [self.letterText setNeedsDisplay];
+    self.morseText.text = morseChar;
+    [self.morseText setNeedsDisplay];
 }
 
 #pragma mark Button Methods
@@ -154,6 +132,10 @@
     }
 }
 
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    self.transmitButton.enabled = YES;
+}
+
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     self.transmitButton.enabled = NO;
 }
@@ -171,14 +153,16 @@
 
 #pragma mark switch button
 -(void)switchDisabledToTransmit {
-    if ([self.inputField.text length] == 0) {
-        self.transmitButton.enabled = NO;
-        [self setDisabled];
-        [self.transmitButton setAlpha:.5f];
-    } else {
-        [self setTransmitting];
-        self.transmitButton.enabled = YES;
-        [self.transmitButton setAlpha:1.f];
+    if(self.torchQueue.operationCount == 0) {
+        if ([self.inputField.text length] == 0) {
+            self.transmitButton.enabled = NO;
+            [self setDisabled];
+            [self.transmitButton setAlpha:.5f];
+        } else {
+            [self setTransmitting];
+            self.transmitButton.enabled = YES;
+            [self.transmitButton setAlpha:1.f];
+        }
     }
 }
 

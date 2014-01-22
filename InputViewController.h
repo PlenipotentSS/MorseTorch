@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#pragma mark - HorizontalCellDelegate Protocol
+
 @interface InputViewController : UIViewController
+
 
 @end

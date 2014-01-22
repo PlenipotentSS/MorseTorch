@@ -14,4 +14,6 @@
 
 +(NSArray*) getSymbolsFromString: (NSString*) string;
 
++(NSString*) validateString:(NSString*) string;
+
 @end
