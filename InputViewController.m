@@ -9,43 +9,37 @@
 #import "InputViewController.h"
 #import "NSString+MorseCode.h"
 #import "UIColor+MorseTorch.h"
-#import "SSNSOperation.h"
+#import "SSProgressViewRingGradient.h"
+#import "SSTorchAccess.h"
 
 @import AVFoundation;
 
-@interface InputViewController () <UITextFieldDelegate,SSNOperationDelegate>
+@interface InputViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputField;
 @property (weak, nonatomic) IBOutlet UILabel *morseText;
 @property (weak, nonatomic) IBOutlet UILabel *letterText;
 @property (weak, nonatomic) IBOutlet UIButton *transmitButton;
 @property (nonatomic) NSOperationQueue *torchQueue;
-
-@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+@property (nonatomic) AVCaptureDevice *device;
+@property (nonatomic) SSProgressViewRingGradient *hudProgress;
 
 @end
 
 @implementation InputViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.inputField.delegate = self;
     self.torchQueue = [[NSOperationQueue alloc] init];
     self.torchQueue.name = @"Torch Queue";
     [self.torchQueue setMaxConcurrentOperationCount:1];
+    self.hudProgress = [[SSProgressViewRingGradient alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    self.hudProgress.center = self.view.center;
+    self.hudProgress.showPercentage = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-	
+    self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     // Do any additional setup after loading the view.
 }
 
@@ -55,29 +49,82 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark -
+#pragma mark - Transmit using many operations
 - (IBAction)transmitString:(id)sender {
+    if ([self.inputField isFirstResponder]) {
+        [self.inputField resignFirstResponder];
+    }
     if (self.torchQueue.operationCount == 0) {
+        [[SSTorchAccess sharedManager] takeTorch];
         [self setCancel];
-        NSString *inputText =self.inputField.text;
-        NSString *validatedText = [NSString validateString:inputText];
+        NSString *inputText = [NSString validateString:self.inputField.text];
         NSArray* morse = [NSString getSymbolsFromString:inputText];
         
-        SSNSOperation *op = [[SSNSOperation alloc] initWithMorseArray:morse andString:validatedText];
-        op.delegate = self;
-        [self.torchQueue addOperation:op];
+        if (![self.hudProgress superview]) {
+            [self.view addSubview:self.hudProgress];
+            [self.hudProgress setProgress:0.0f animated:YES];
+            self.hudProgress.center = CGPointMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame)+175);
+        }
+        
+        CGFloat totalProcess = [morse count];
+        CGFloat segmentedProcess = (1.f/(float)totalProcess);
+        NSInteger counter = 0;
+        CGFloat ongoingSegment = 0;
+        for (NSString* code in morse) {
+            for (NSUInteger i=0;i<[code length];i++) {
+                NSString *dotOrDash = [code substringWithRange:NSMakeRange(i, 1)];
+                
+                [self.torchQueue addOperationWithBlock:^{
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        
+                        CGFloat thisProgress = (float)(i+1)/(float)[code length]*segmentedProcess+ongoingSegment;
+                        [self.hudProgress setProgress:thisProgress animated:YES];
+                        
+                        unichar charString = [inputText characterAtIndex:counter];
+                        [self updateTextLabelText: [NSString stringWithFormat:@"%c",charString] andMorseLabelText: code];
+                        
+                    }];
+                }];
+                if ([dotOrDash isEqualToString:@"."]) {
+                    [self.torchQueue addOperationWithBlock:^{
+                        [[SSTorchAccess sharedManager] engageTorch];
+                        usleep(DOT_IN_MICROSEC);
+                        [[SSTorchAccess sharedManager] disengageTorch];
+                    }];
+                } else if ([dotOrDash isEqualToString:@"_"]) {
+                    [self.torchQueue addOperationWithBlock:^{
+                        [[SSTorchAccess sharedManager] engageTorch];
+                        usleep(DASH_IN_MICROSEC);
+                        [[SSTorchAccess sharedManager] disengageTorch];
+                    }];
+                }
+                [self.torchQueue addOperationWithBlock:^{
+                    usleep(LETTER_DELAY_IN_MICROSEC);
+                }];
+            }
+            [self.torchQueue addOperationWithBlock:^{
+                usleep(WORD_DELAY_IN_MICROSEC);
+            }];
+            counter++;
+            ongoingSegment += segmentedProcess;
+        }
         [self.torchQueue addOperationWithBlock:^{
+            [[SSTorchAccess sharedManager] releaseTorch];
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [self.hudProgress removeFromSuperview];
                 [self setTransmitting];
             }];
         }];
     } else {
+        
+        [[SSTorchAccess sharedManager] releaseTorch];
+        [self.hudProgress removeFromSuperview];
         [self.torchQueue cancelAllOperations];
         [self setTransmitting];
     }
 }
 
-#pragma mark - InputViewController.h
+#pragma mark - 
 - (void)updateTextLabelText:(NSString*) text andMorseLabelText: (NSString*)morseChar {
     self.letterText.text = text;
     [self.letterText setNeedsDisplay];

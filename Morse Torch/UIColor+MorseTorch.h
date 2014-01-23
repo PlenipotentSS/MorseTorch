@@ -18,4 +18,6 @@
 
 +(UIColor*) getTransmitTintColor;
 
++(UIColor*) randomColor;
+
 @end

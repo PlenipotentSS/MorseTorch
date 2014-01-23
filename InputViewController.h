@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#pragma mark - HorizontalCellDelegate Protocol
-
 @interface InputViewController : UIViewController
-
+@property (nonatomic) NSUInteger pageIndex;
 
 @end
