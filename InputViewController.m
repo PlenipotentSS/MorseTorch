@@ -34,13 +34,30 @@
     self.torchQueue = [[NSOperationQueue alloc] init];
     self.torchQueue.name = @"Torch Queue";
     [self.torchQueue setMaxConcurrentOperationCount:1];
-    self.hudProgress = [[SSProgressViewRingGradient alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-    self.hudProgress.center = self.view.center;
-    self.hudProgress.showPercentage = NO;
+
+    [self setup];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     // Do any additional setup after loading the view.
+}
+
+#pragma mark Setup Views
+-(void) setup {
+    self.hudProgress = [[SSProgressViewRingGradient alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    self.hudProgress.center = CGPointMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame)+140);
+    self.hudProgress.showPercentage = NO;
+    
+    [self.view addSubview:self.hudProgress];
+    [self.hudProgress setProgress:0.0f animated:YES];
+    
+    self.letterText.layer.cornerRadius = CGRectGetHeight(self.letterText.frame)/2;
+    self.letterText.layer.masksToBounds = YES;
+    self.morseText.layer.cornerRadius = CGRectGetHeight(self.morseText.frame)/2;
+    self.morseText.layer.masksToBounds = YES;
+    
+    self.transmitButton.layer.cornerRadius = 5;
+    self.transmitButton.layer.masksToBounds = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,13 +76,7 @@
         [self setCancel];
         NSString *inputText = [NSString validateString:self.inputField.text];
         NSArray* morse = [NSString getSymbolsFromString:inputText];
-        
-        if (![self.hudProgress superview]) {
-            [self.view addSubview:self.hudProgress];
-            [self.hudProgress setProgress:0.0f animated:YES];
-            self.hudProgress.center = CGPointMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame)+175);
-        }
-        
+    
         CGFloat totalProcess = [morse count];
         CGFloat segmentedProcess = (1.f/(float)totalProcess);
         NSInteger counter = 0;
@@ -111,14 +122,13 @@
         [self.torchQueue addOperationWithBlock:^{
             [[SSTorchAccess sharedManager] releaseTorch];
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [self.hudProgress removeFromSuperview];
+                [self.hudProgress setAlpha:1];
                 [self setTransmitting];
             }];
         }];
     } else {
-        
         [[SSTorchAccess sharedManager] releaseTorch];
-        [self.hudProgress removeFromSuperview];
+        [self.hudProgress setAlpha:1];
         [self.torchQueue cancelAllOperations];
         [self setTransmitting];
     }

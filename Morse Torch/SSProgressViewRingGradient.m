@@ -28,7 +28,19 @@
 }
 
 -(UIColor*) getNextColor:(CGFloat) progress {
-    return [UIColor colorWithRed:0 green:progress blue:1.f-progress alpha:1.f];
+    CGFloat r1,g1,b1,a1;
+    [[UIColor getTransmitBgColor] getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
+    
+    CGFloat r2,g2,b2,a2;
+    [[UIColor getCancelBgColor] getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
+    
+    CGFloat r,g,b,a;
+    r = r2-progress*(r2-r1);
+    g = g2-progress*(g2-g1);
+    b = b2-progress*(b2-b1);
+    a = a2-progress*(a2-a1);
+    
+    return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
 @end
