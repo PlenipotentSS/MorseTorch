@@ -18,4 +18,5 @@
 
 -(BOOL)start;
 -(BOOL)stop;
+-(BOOL)isReceiving;
 @end

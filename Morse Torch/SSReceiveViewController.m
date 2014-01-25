@@ -19,7 +19,7 @@
 
 @property (nonatomic) NSTimeInterval flashStarted;
 @property (nonatomic) NSTimeInterval flashEnded;
-@property (nonatomic) NSTimeInterval flashDurationBetweenFlashes;
+@property (nonatomic) NSTimeInterval pauseDurationBetweenFlashes;
 @property (weak, nonatomic) IBOutlet UIView *flashVideoView;
 @property (nonatomic) NSMutableArray *symbolArrays;
 
@@ -41,9 +41,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveOnMagicEventDetected:) name:@"onMagicEventDetected" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLightDetected:) name:@"OnReceiveLightDetected" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveOnMagicEventNotDetected:) name:@"onMagicEventNotDetected" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLightNotDetected:) name:@"OnReceiveLightNotDetected" object:nil];
     
     self.receivedText.layer.cornerRadius = 5;
     self.receivedText.layer.masksToBounds = YES;
@@ -56,17 +56,21 @@
 
 }
 
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     if ([[SSTorchAccess sharedManager] isTransmitting] ){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Transmitting" message:@"Please Wait While the current Code is Transmitting" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alertView show];
         self.receiveButton.enabled = NO;
         [self.receiveButton  setDisabled];
+        [self.receiveButton setAlpha:.5f];
     } else {
-        self.receiveButton.enabled = YES;
-        [self.receiveButton  setReceive];
+        if (![self.brightnessDetector isReceiving]) {
+            self.receiveButton.enabled = YES;
+            [self.receiveButton  setReceive];
+            [self.receiveButton setAlpha:1.f];
+        }
     }
 }
 
@@ -89,7 +93,7 @@
         [self.symbolArrays removeAllObjects];
         self.flashStarted = 0.f;
         self.flashEnded = 0.f;
-        self.flashDurationBetweenFlashes = 0.f;
+        self.pauseDurationBetweenFlashes = 0.f;
     } else {
         [self.brightnessDetector stop
          ];
@@ -105,14 +109,14 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)receiveOnMagicEventDetected:(NSNotification *) notification
+-(void)receiveLightDetected:(NSNotification *) notification
 {
-    CGFloat offDuration = [NSDate timeIntervalSinceReferenceDate]-self.flashDurationBetweenFlashes;
+    CGFloat offDuration = [NSDate timeIntervalSinceReferenceDate]-self.pauseDurationBetweenFlashes;
     BOOL updateUI = NO;
     if (!self.flashStarted) {
         self.flashStarted = [NSDate timeIntervalSinceReferenceDate];
         NSLog(@"%f",offDuration);
-        if (offDuration > .4 ) {
+        if (offDuration > .5 ) {
             updateUI = YES;
         }
     } else if ( [self.symbolArrays count] != 0 && offDuration > 1.f ) {
@@ -136,14 +140,16 @@
             [self.morseText setText:[NSString stringWithFormat:@"%@ ",symbolsSoFar]];
         }];
         [self.symbolArrays removeAllObjects];
-        self.flashDurationBetweenFlashes = 0.f;
+        self.pauseDurationBetweenFlashes = 0.f;
     }
 }
 
--(void)receiveOnMagicEventNotDetected:(NSNotification *) notification
+-(void)receiveLightNotDetected:(NSNotification *) notification
 {
+    self.flashEnded = [NSDate timeIntervalSinceReferenceDate];
     if (self.flashStarted) {
-        self.flashEnded = [NSDate timeIntervalSinceReferenceDate];
+        //if the flash was detected & now checking to see what symbol was found
+        
         CGFloat duration = self.flashEnded-self.flashStarted;
         NSString *symbol = @"";
         if (duration < .3) {
@@ -157,7 +163,30 @@
         }];
         [self.symbolArrays addObject:symbol];
         self.flashStarted = 0.f;
-        self.flashDurationBetweenFlashes = [NSDate timeIntervalSinceReferenceDate];
+        self.pauseDurationBetweenFlashes = [NSDate timeIntervalSinceReferenceDate];
+    } else {
+        //if there is anything left in the array during a long pause
+        
+        CGFloat offDuration = self.flashEnded-self.pauseDurationBetweenFlashes;
+        if (offDuration > 1.f && [self.symbolArrays count] > 0) {
+            NSString *morseWord = @"";
+            for (NSString *symbol in self.symbolArrays) {
+                morseWord = [NSString stringWithFormat:@"%@%@",morseWord,symbol];
+            }
+            NSString *letter = [NSString letterForMorseWord:morseWord];
+            NSLog(@"%@ : %@",morseWord, letter);
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                //update letter field
+                NSString *textSoFar = self.receivedText.text;
+                [self.receivedText setText:[NSString stringWithFormat:@"%@ %@",textSoFar,letter]];
+                
+                //update morse symbol field
+                NSString *symbolsSoFar = self.morseText.text;
+                [self.morseText setText:[NSString stringWithFormat:@"%@ ",symbolsSoFar]];
+            }];
+            [self.symbolArrays removeAllObjects];
+            self.pauseDurationBetweenFlashes = 0.f;
+        }
     }
 }
 

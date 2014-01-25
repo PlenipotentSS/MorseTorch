@@ -18,8 +18,10 @@
 @interface SSBrightnessDetector() <AVCaptureAudioDataOutputSampleBufferDelegate>
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) BOOL hasStarted;
+@property (nonatomic) CGFloat threshold;
 @property (nonatomic) NSMutableArray *normalizingNumbers;
 @property (nonatomic) BOOL brightnessTriggered;
+@property (nonatomic) NSTimeInterval timeBeyondThreshold;
 @end
 
 @implementation SSBrightnessDetector
@@ -36,6 +38,8 @@
 - (void)setup
 {
     self.hasStarted = NO;
+    self.timeBeyondThreshold = 0.f;
+    self.threshold = 0.f;
     self.normalizingNumbers = [[NSMutableArray alloc] init];
     [NSThread detachNewThreadSelector:@selector(initCapture) toTarget:self withObject:nil];
 }
@@ -102,6 +106,10 @@
     return self.hasStarted;
 }
 
+-(BOOL)isReceiving {
+    return self.hasStarted;
+}
+
 -(BOOL)stop
 {
     if(self.hasStarted){
@@ -156,16 +164,26 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         totalBrightness /= 1000;
         
         if ([self.normalizingNumbers count] == NORMALIZE_MAX ){
-            NSInteger normalized = totalBrightness/[self getNormalizedBrightness];
-            if (normalized > 1){
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"onMagicEventDetected" object:nil];
+            CGFloat normalized = (float)totalBrightness/[self getNormalizedBrightness];
+            if (normalized > 2*self.threshold){
+                if (self.timeBeyondThreshold == 0.f) {
+                    self.timeBeyondThreshold = [NSDate timeIntervalSinceReferenceDate];
+                } else if ([NSDate timeIntervalSinceReferenceDate]-self.timeBeyondThreshold > .5f) {
+                    [self normalizeWithBrightness:totalBrightness];
+                    self.threshold = (float)totalBrightness/[self getNormalizedBrightness];
+                }
+                NSLog(@"norm: %f : thresh: %f",normalized, self.threshold);
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightDetected" object:nil];
                 self.brightnessTriggered = YES;
             } else {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"onMagicEventNotDetected" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightNotDetected" object:nil];
                 [self normalizeWithBrightness:totalBrightness];
+                self.threshold = (float)totalBrightness/[self getNormalizedBrightness];
+                self.timeBeyondThreshold = 0.f;
             }
         } else {
             [self normalizeWithBrightness:totalBrightness];
+            self.threshold = (float)totalBrightness/[self getNormalizedBrightness];
         }
     }
     
