@@ -16,4 +16,6 @@
 
 +(NSString*) validateString:(NSString*) string;
 
++(NSString*) letterForMorseWord: (NSString *) symbol;
+
 @end

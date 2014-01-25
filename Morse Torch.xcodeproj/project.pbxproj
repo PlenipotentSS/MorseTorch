@@ -24,6 +24,8 @@
 		D211D7F9188DC34200EA0A42 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7F8188DC34100EA0A42 /* InputViewController.m */; };
 		D211D7FC188DC47A00EA0A42 /* NSString+MorseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */; };
 		D211D801188DC89E00EA0A42 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D800188DC89E00EA0A42 /* Constants.m */; };
+		D22B18AE18930B6B0043D7A0 /* SSBrightnessDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D22B18B2189315290043D7A0 /* SSMorseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D22B18B1189315290043D7A0 /* SSMorseButton.m */; };
 		D280F1041890825400FDC137 /* SSPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F1031890825400FDC137 /* SSPageViewController.m */; };
 		D280F10718908F9700FDC137 /* SSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F10618908F9700FDC137 /* SSViewController.m */; };
 		D280F10A189091C200FDC137 /* SSReceiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F109189091C200FDC137 /* SSReceiveViewController.m */; };
@@ -68,6 +70,10 @@
 		D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MorseCode.m"; sourceTree = "<group>"; };
 		D211D7FF188DC89E00EA0A42 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		D211D800188DC89E00EA0A42 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		D22B18AC18930B6B0043D7A0 /* SSBrightnessDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSBrightnessDetector.h; sourceTree = "<group>"; };
+		D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSBrightnessDetector.m; sourceTree = "<group>"; };
+		D22B18B0189315290043D7A0 /* SSMorseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMorseButton.h; sourceTree = "<group>"; };
+		D22B18B1189315290043D7A0 /* SSMorseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMorseButton.m; sourceTree = "<group>"; };
 		D280F1021890825400FDC137 /* SSPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPageViewController.h; sourceTree = "<group>"; };
 		D280F1031890825400FDC137 /* SSPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPageViewController.m; sourceTree = "<group>"; };
 		D280F10518908F9700FDC137 /* SSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSViewController.h; sourceTree = "<group>"; };
@@ -148,6 +154,8 @@
 				D211D7DA188DC1D600EA0A42 /* Images.xcassets */,
 				D211D7FF188DC89E00EA0A42 /* Constants.h */,
 				D211D800188DC89E00EA0A42 /* Constants.m */,
+				D22B18AC18930B6B0043D7A0 /* SSBrightnessDetector.h */,
+				D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */,
 				D280F1111890AC2F00FDC137 /* Subclasses */,
 				D29A2A68188F4EBC009FA15E /* Model */,
 				D211D7FE188DC48C00EA0A42 /* Views */,
@@ -217,6 +225,8 @@
 			children = (
 				D280F10E1890AC2600FDC137 /* SSProgressViewRingGradient.h */,
 				D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */,
+				D22B18B0189315290043D7A0 /* SSMorseButton.h */,
+				D22B18B1189315290043D7A0 /* SSMorseButton.m */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -364,10 +374,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D280F10D1890995600FDC137 /* SSTorchAccess.m in Sources */,
+				D22B18AE18930B6B0043D7A0 /* SSBrightnessDetector.m in Sources */,
 				D211D801188DC89E00EA0A42 /* Constants.m in Sources */,
 				D280F10A189091C200FDC137 /* SSReceiveViewController.m in Sources */,
 				D280F1101890AC2600FDC137 /* SSProgressViewRingGradient.m in Sources */,
 				D211D7D3188DC1D600EA0A42 /* SSAppDelegate.m in Sources */,
+				D22B18B2189315290043D7A0 /* SSMorseButton.m in Sources */,
 				D280F10718908F9700FDC137 /* SSViewController.m in Sources */,
 				D280F1041890825400FDC137 /* SSPageViewController.m in Sources */,
 				D211D7F9188DC34200EA0A42 /* InputViewController.m in Sources */,

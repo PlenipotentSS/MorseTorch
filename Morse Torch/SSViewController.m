@@ -53,7 +53,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Page View Controller Data Source
+#pragma mark - UIPageControl View Controller Data Source
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {

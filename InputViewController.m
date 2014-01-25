@@ -11,16 +11,16 @@
 #import "UIColor+MorseTorch.h"
 #import "SSProgressViewRingGradient.h"
 #import "SSTorchAccess.h"
+#import "SSMorseButton.h"
 
 @import AVFoundation;
 
 @interface InputViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *inputField;
+@property (weak, nonatomic) IBOutlet SSMorseButton *transmitButton;
 @property (weak, nonatomic) IBOutlet UILabel *morseText;
 @property (weak, nonatomic) IBOutlet UILabel *letterText;
-@property (weak, nonatomic) IBOutlet UIButton *transmitButton;
 @property (nonatomic) NSOperationQueue *torchQueue;
-@property (nonatomic) AVCaptureDevice *device;
 @property (nonatomic) SSProgressViewRingGradient *hudProgress;
 
 @end
@@ -32,13 +32,11 @@
     [super viewDidLoad];
     self.inputField.delegate = self;
     self.torchQueue = [[NSOperationQueue alloc] init];
-    self.torchQueue.name = @"Torch Queue";
     [self.torchQueue setMaxConcurrentOperationCount:1];
 
     [self setup];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-    self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     // Do any additional setup after loading the view.
 }
 
@@ -51,9 +49,9 @@
     [self.view addSubview:self.hudProgress];
     [self.hudProgress setProgress:0.0f animated:YES];
     
-    self.letterText.layer.cornerRadius = CGRectGetHeight(self.letterText.frame)/2;
+    self.letterText.layer.cornerRadius = 5;
     self.letterText.layer.masksToBounds = YES;
-    self.morseText.layer.cornerRadius = CGRectGetHeight(self.morseText.frame)/2;
+    self.morseText.layer.cornerRadius = 5;
     self.morseText.layer.masksToBounds = YES;
     
     self.transmitButton.layer.cornerRadius = 5;
@@ -73,7 +71,7 @@
     }
     if (self.torchQueue.operationCount == 0) {
         [[SSTorchAccess sharedManager] takeTorch];
-        [self setCancel];
+        [self.transmitButton setCancel];
         NSString *inputText = [NSString validateString:self.inputField.text];
         NSArray* morse = [NSString getSymbolsFromString:inputText];
     
@@ -123,14 +121,14 @@
             [[SSTorchAccess sharedManager] releaseTorch];
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 [self.hudProgress setAlpha:1];
-                [self setTransmitting];
+                [self.transmitButton setTransmit];
             }];
         }];
     } else {
         [[SSTorchAccess sharedManager] releaseTorch];
         [self.hudProgress setAlpha:1];
         [self.torchQueue cancelAllOperations];
-        [self setTransmitting];
+        [self.transmitButton setTransmit];
     }
 }
 
@@ -140,25 +138,6 @@
     [self.letterText setNeedsDisplay];
     self.morseText.text = morseChar;
     [self.morseText setNeedsDisplay];
-}
-
-#pragma mark Button Methods
--(void) setCancel {
-    [self.transmitButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    [self.transmitButton setTintColor:[UIColor getCancelTintColor]];
-    [self.transmitButton setBackgroundColor:[UIColor getCancelBgColor]];
-}
-
--(void) setTransmitting {
-    [self.transmitButton setTitle:@"Transmit" forState:UIControlStateNormal];
-    [self.transmitButton setBackgroundColor:[UIColor getTransmitBgColor]];
-    [self.transmitButton setTintColor:[UIColor getTransmitTintColor]];
-}
-
--(void) setDisabled {
-    [self.transmitButton setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-    [self.transmitButton setTintColor:[UIColor lightGrayColor]];
-    self.transmitButton.enabled = NO;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -192,10 +171,10 @@
     if(self.torchQueue.operationCount == 0) {
         if ([self.inputField.text length] == 0) {
             self.transmitButton.enabled = NO;
-            [self setDisabled];
+            [self.transmitButton setDisabled];
             [self.transmitButton setAlpha:.5f];
         } else {
-            [self setTransmitting];
+            [self.transmitButton setTransmit];
             self.transmitButton.enabled = YES;
             [self.transmitButton setAlpha:1.f];
         }
