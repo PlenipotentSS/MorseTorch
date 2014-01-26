@@ -220,12 +220,12 @@
 		D29A2A68188F4EBC009FA15E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D22B18AC18930B6B0043D7A0 /* SSBrightnessDetector.h */,
-				D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */,
-				D280F10B1890995600FDC137 /* SSTorchAccess.h */,
-				D280F10C1890995600FDC137 /* SSTorchAccess.m */,
 				D280F10E1890AC2600FDC137 /* SSProgressViewRingGradient.h */,
 				D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */,
+				D280F10B1890995600FDC137 /* SSTorchAccess.h */,
+				D280F10C1890995600FDC137 /* SSTorchAccess.m */,
+				D22B18AC18930B6B0043D7A0 /* SSBrightnessDetector.h */,
+				D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";

@@ -124,7 +124,9 @@
     } else {
         [[SSBrightnessDetector sharedManager] stop];
         [self.receiveButton  setReceive];
-        [self resetHUD];
+        if (self.hudProgress) {
+            [self resetHUD];
+        }
         NSLog(@"%@",self.symbolArrays);
     }
 }
@@ -157,7 +159,6 @@
 -(void) hideHubForCalibration:(NSNotification *) notification {
     if (self.hudProgress) {
         [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
-            NSLog(@" Finished Calibrating");
             [self performSelector:@selector(setCompleteHUD) withObject:nil afterDelay:self.hudProgress.animationDuration + .1];
         }];
     }
