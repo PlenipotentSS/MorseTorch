@@ -12,16 +12,31 @@
 #import "SSProgressViewRingGradient.h"
 #import "SSTorchAccess.h"
 #import "SSMorseButton.h"
+#import "SSResponsiveScrollView.h"
 
 @import AVFoundation;
 
-@interface InputViewController () <UITextFieldDelegate>
+@interface InputViewController () <UITextFieldDelegate, UIScrollViewDelegate>
+
+//the UILabel containing text to encode in flashes
 @property (weak, nonatomic) IBOutlet UITextField *inputField;
+
+//the UIButton to send the text
 @property (weak, nonatomic) IBOutlet SSMorseButton *transmitButton;
+
+//the UILabels to show the current letter and morse word being sent
 @property (weak, nonatomic) IBOutlet UILabel *morseText;
 @property (weak, nonatomic) IBOutlet UILabel *letterText;
+
+//the background queue containing the flashes
 @property (nonatomic) NSOperationQueue *torchQueue;
+
+//the HUD that shows the current progress of the text being sent
 @property (nonatomic) SSProgressViewRingGradient *hudProgress;
+
+//UI objects for content wrapping
+@property (weak, nonatomic) IBOutlet UIView *theInputView;
+@property (weak, nonatomic) IBOutlet SSResponsiveScrollView *theScrollView;
 
 @end
 
@@ -37,16 +52,23 @@
     [self setup];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-    // Do any additional setup after loading the view.
+    
+    [self.theScrollView setTextFields:@[self.inputField]];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.theScrollView.contentOffset = CGPointMake(0, 0);
+    self.theScrollView.contentSize = CGSizeMake(320.f, 460.f);
 }
 
 #pragma mark Setup Views
 -(void) setup {
     self.hudProgress = [[SSProgressViewRingGradient alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-    self.hudProgress.center = CGPointMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame)+140);
+    self.hudProgress.center = CGPointMake(CGRectGetMidX(self.view.frame), CGRectGetMaxY(self.transmitButton.frame)+CGRectGetHeight(self.transmitButton.frame)+20);
     self.hudProgress.showPercentage = NO;
     
-    [self.view addSubview:self.hudProgress];
+    [self.theInputView addSubview:self.hudProgress];
     [self.hudProgress setProgress:0.0f animated:YES];
     
     self.letterText.layer.cornerRadius = 5;
@@ -56,6 +78,7 @@
     
     self.transmitButton.layer.cornerRadius = 5;
     self.transmitButton.layer.masksToBounds = YES;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,12 +164,6 @@
 }
 
 #pragma mark - UITextFieldDelegate
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    if ( [self.inputField isFirstResponder]) {
-        [self.inputField resignFirstResponder];
-    }
-}
-
 -(void)textFieldDidEndEditing:(UITextField *)textField {
     self.transmitButton.enabled = YES;
 }

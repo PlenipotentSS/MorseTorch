@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SSBrightnessDetector.h"
 
 @interface SSReceiveViewController : UIViewController
 
+//the current index in the UIPageController
 @property (nonatomic) NSUInteger pageIndex;
-@property (nonatomic) SSBrightnessDetector *brightnessDetector;
+
 @end

@@ -12,6 +12,8 @@
 #import "SSTorchAccess.h"
 
 @interface SSViewController () <UIPageViewControllerDataSource>
+
+//the page controller
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
 @end
@@ -35,7 +37,8 @@
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
     
-    InputViewController *startingViewController = (InputViewController*)[self viewControllerAtIndex:0];
+    //InputViewController *startingViewController = (InputViewController*)[self viewControllerAtIndex:0];
+    SSReceiveViewController *startingViewController = (SSReceiveViewController*)[self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
@@ -90,11 +93,11 @@
 - (UIViewController *)viewControllerAtIndex:(NSUInteger)index
 {
     if (index==0) {
-        InputViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"transmitVC"];
+        InputViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"receiveVC"];
         pageContentViewController.pageIndex = index;
         return pageContentViewController;
     } else if (index==1) {
-        SSReceiveViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"receiveVC"];
+        SSReceiveViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"transmitVC"];
         pageContentViewController.pageIndex = index;
         return pageContentViewController;
     }

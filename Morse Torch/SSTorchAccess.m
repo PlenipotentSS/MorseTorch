@@ -11,7 +11,10 @@
 
 @interface  SSTorchAccess()
 
+//the device being used to acquire the flash
 @property (nonatomic) AVCaptureDevice *device;
+
+//storing whether the torch is currently being used
 @property (atomic) BOOL transmitting;
 
 @end

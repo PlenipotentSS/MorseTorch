@@ -23,26 +23,22 @@
 #pragma mark Button Methods
 -(void) setCancel {
     [self setTitle:@"Cancel" forState:UIControlStateNormal];
-    [self setTintColor:[UIColor whiteColor]];
     [self setBackgroundColor:[UIColor getCancelBgColor]];
 }
 
 -(void) setTransmit {
     [self setTitle:@"Transmit" forState:UIControlStateNormal];
     [self setBackgroundColor:[UIColor getTransmitBgColor]];
-    [self setTintColor:[UIColor whiteColor]];
 }
 
 -(void) setReceive {
     [self setTitle:@"Receive" forState:UIControlStateNormal];
     [self setBackgroundColor:[UIColor getTransmitBgColor]];
-    [self setTintColor:[UIColor whiteColor]];
 }
 
 
 -(void) setDisabled {
     [self setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-    [self setTintColor:[UIColor lightGrayColor]];
     self.enabled = NO;
 }
 

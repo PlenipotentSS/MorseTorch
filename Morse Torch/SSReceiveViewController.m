@@ -10,76 +10,103 @@
 #import "SSTorchAccess.h"
 #import "SSMorseButton.h"
 #import "NSString+MorseCode.h"
+#import "SSBrightnessDetector.h"
+#import <M13ProgressSuite/M13ProgressHUD.h>
+#import <M13ProgressSuite/M13ProgressViewRing.h>
+#import "SSAppDelegate.h"
 
 @interface SSReceiveViewController ()
+
+// UILabels to display morse code to user
 @property (weak, nonatomic) IBOutlet UILabel *receivedText;
 @property (weak, nonatomic) IBOutlet UILabel *morseText;
-@property (weak, nonatomic) IBOutlet SSMorseButton *receiveButton;
-@property (nonatomic) BOOL isReceiving;
 
+//UIButton class to start receiving messages
+@property (weak, nonatomic) IBOutlet SSMorseButton *receiveButton;
+
+//time intervals to configure to morse code configurations
 @property (nonatomic) NSTimeInterval flashStarted;
 @property (nonatomic) NSTimeInterval flashEnded;
 @property (nonatomic) NSTimeInterval pauseDurationBetweenFlashes;
-@property (weak, nonatomic) IBOutlet UIView *flashVideoView;
+
+//local storage of current morse code being decoded
 @property (nonatomic) NSMutableArray *symbolArrays;
+
+//video view of current brightness scan
+@property (weak, nonatomic) IBOutlet UIView *flashVideoView;
+
+//scrollview for current view
+@property (weak, nonatomic) IBOutlet UIScrollView *theScrollView;
+
+//the HUD that shows the current progress of the text being sent
+@property (nonatomic) M13ProgressHUD *hudProgress;
 
 @end
 
 @implementation SSReceiveViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    //listeners for light detection
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLightDetected:) name:@"OnReceiveLightDetected" object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveLightNotDetected:) name:@"OnReceiveLightNotDetected" object:nil];
+    
+    //listeners for light calibration
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayHubForCalibration:) name:@"displayHubForCalibration" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHubForCalibration:) name:@"hideHubForCalibration" object:nil];
     
     self.receivedText.layer.cornerRadius = 5;
     self.receivedText.layer.masksToBounds = YES;
+    
     self.morseText.layer.cornerRadius = 5;
     self.morseText.layer.masksToBounds = YES;
     
+    self.receiveButton.layer.cornerRadius = 5;
+    self.receiveButton.layer.masksToBounds = YES;
+    
+    self.flashVideoView.layer.cornerRadius = 5;
+    self.flashVideoView.layer.masksToBounds = YES;
+    
+    [[SSBrightnessDetector sharedManager] setup];
+    
     //initialize the magicevents
-    self.brightnessDetector = [[SSBrightnessDetector alloc] init];
     self.symbolArrays = [[NSMutableArray alloc] init];
+}
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.theScrollView.contentOffset = CGPointMake(0, 0);
+    self.theScrollView.contentSize = CGSizeMake(320.f, 460.f);
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     if ([[SSTorchAccess sharedManager] isTransmitting] ){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Transmitting" message:@"Please Wait While the current Code is Transmitting" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [alertView show];
-        self.receiveButton.enabled = NO;
-        [self.receiveButton  setDisabled];
-        [self.receiveButton setAlpha:.5f];
+        if (![[SSBrightnessDetector sharedManager] isReceiving]) {
+            self.receiveButton.enabled = NO;
+            [self.receiveButton  setDisabled];
+            [self.receiveButton setAlpha:.5f];
+        }
     } else {
-        if (![self.brightnessDetector isReceiving]) {
+        if (![[SSBrightnessDetector sharedManager] isReceiving]) {
             self.receiveButton.enabled = YES;
             [self.receiveButton  setReceive];
             [self.receiveButton setAlpha:1.f];
         }
+        self.receiveButton.enabled = YES;
+        [self.receiveButton setAlpha:1.f];
     }
 }
 
 -(IBAction)receiveButtonPressed
 {
-    if (!self.isReceiving){
+    if (![[SSBrightnessDetector sharedManager] isReceiving]){
         NSLog(@"Magic Events Reader");
-        [self.brightnessDetector start];
-        self.isReceiving = YES;
+        [[SSBrightnessDetector sharedManager] start];
         [self.receiveButton  setCancel];
         
         //prepare textfield
@@ -95,10 +122,9 @@
         self.flashEnded = 0.f;
         self.pauseDurationBetweenFlashes = 0.f;
     } else {
-        [self.brightnessDetector stop
-         ];
-        self.isReceiving = NO;
+        [[SSBrightnessDetector sharedManager] stop];
         [self.receiveButton  setReceive];
+        [self resetHUD];
         NSLog(@"%@",self.symbolArrays);
     }
 }
@@ -109,18 +135,59 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - SSBrightness Calibrating Notification
+-(void) displayHubForCalibration:(NSNotification *) notification {
+    if (!self.hudProgress) {
+        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
+            self.hudProgress = [[M13ProgressHUD alloc] initWithProgressView:[[M13ProgressViewRing alloc] init]];
+            self.hudProgress.progressViewSize = CGSizeMake(60.0, 60.0);
+            [self.view addSubview:self.hudProgress];
+            self.hudProgress.status = @"Calibrating";
+            
+            [self.hudProgress show:YES];
+        }];
+    }else {
+        CGFloat caliProgress = [(NSNumber*)[[notification userInfo] objectForKey:@"progress"] floatValue];
+        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
+            [self.hudProgress setProgress:caliProgress animated:YES];
+        }];
+    }
+}
+
+-(void) hideHubForCalibration:(NSNotification *) notification {
+    if (self.hudProgress) {
+        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
+            NSLog(@" Finished Calibrating");
+            [self performSelector:@selector(setCompleteHUD) withObject:nil afterDelay:self.hudProgress.animationDuration + .1];
+        }];
+    }
+}
+
+-(void) setCompleteHUD {
+    [self.hudProgress performAction:M13ProgressViewActionSuccess animated:YES];
+    [self performSelector:@selector(resetHUD) withObject:nil afterDelay:1.5];
+}
+
+-(void) resetHUD {
+    [self.hudProgress hide:YES];
+    self.hudProgress = nil;
+}
+
+#pragma mark - SSBrightness Detection notifications
 -(void)receiveLightDetected:(NSNotification *) notification
 {
     CGFloat offDuration = [NSDate timeIntervalSinceReferenceDate]-self.pauseDurationBetweenFlashes;
     BOOL updateUI = NO;
     if (!self.flashStarted) {
         self.flashStarted = [NSDate timeIntervalSinceReferenceDate];
-        NSLog(@"%f",offDuration);
-        if (offDuration > .5 ) {
+        if (offDuration > .5f ) {
             updateUI = YES;
         }
+        //NSLog(@"%f",offDuration);
     } else if ( [self.symbolArrays count] != 0 && offDuration > 1.f ) {
         updateUI = YES;
+    } else {
+        
     }
     
     if (updateUI) {
@@ -129,7 +196,7 @@
             morseWord = [NSString stringWithFormat:@"%@%@",morseWord,symbol];
         }
         NSString *letter = [NSString letterForMorseWord:morseWord];
-        NSLog(@"%@ : %@",morseWord, letter);
+        //NSLog(@"%@ : %@",morseWord, letter);
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             //update letter field
             NSString *textSoFar = self.receivedText.text;
@@ -144,6 +211,10 @@
     }
 }
 
+-(void) showCalibratingHUD {
+    
+}
+
 -(void)receiveLightNotDetected:(NSNotification *) notification
 {
     self.flashEnded = [NSDate timeIntervalSinceReferenceDate];
@@ -152,11 +223,12 @@
         
         CGFloat duration = self.flashEnded-self.flashStarted;
         NSString *symbol = @"";
-        if (duration < .3) {
+        if (duration < .2) {
             symbol = @".";
-        } else if (duration < .5) {
+        } else if (duration < .75) {
             symbol = @"_";
         }
+        NSLog(@"%f -> %@",duration,symbol);
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             NSString *textSoFar = self.morseText.text;
             [self.morseText setText:[NSString stringWithFormat:@"%@%@",textSoFar,symbol]];
@@ -166,7 +238,6 @@
         self.pauseDurationBetweenFlashes = [NSDate timeIntervalSinceReferenceDate];
     } else {
         //if there is anything left in the array during a long pause
-        
         CGFloat offDuration = self.flashEnded-self.pauseDurationBetweenFlashes;
         if (offDuration > 1.f && [self.symbolArrays count] > 0) {
             NSString *morseWord = @"";
@@ -174,7 +245,7 @@
                 morseWord = [NSString stringWithFormat:@"%@%@",morseWord,symbol];
             }
             NSString *letter = [NSString letterForMorseWord:morseWord];
-            NSLog(@"%@ : %@",morseWord, letter);
+            //NSLog(@"%@ : %@",morseWord, letter);
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 //update letter field
                 NSString *textSoFar = self.receivedText.text;

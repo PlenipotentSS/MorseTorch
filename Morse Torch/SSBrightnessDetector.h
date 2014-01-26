@@ -12,10 +12,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class SSBrightnessDetector;
-
 @interface SSBrightnessDetector : NSObject
 
+//shared Manager for this singleton
++(SSBrightnessDetector*) sharedManager;
+
+- (void)setup;
 -(BOOL)start;
 -(BOOL)stop;
 -(BOOL)isReceiving;

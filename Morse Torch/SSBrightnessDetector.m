@@ -13,26 +13,37 @@
 #import "SSBrightnessDetector.h"
 #import <AVFoundation/AVFoundation.h>
 
-#define NORMALIZE_MAX 20
+#define NORMALIZE_MAX 25
+#define BRIGHTNESS_THRESHOLD 70
+#define MIN_BRIGHTNESS_THRESHOLD 10
+
+#define LOW_LIGHT_CONDITIONS_MAX 
+#define AVG_LIGHT_CONDITIONS_MAX
+#define HIGH_LIGHT_CONDITIONS_MAX
 
 @interface SSBrightnessDetector() <AVCaptureAudioDataOutputSampleBufferDelegate>
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) BOOL hasStarted;
 @property (nonatomic) CGFloat threshold;
+@property (nonatomic) CGFloat lastNormBrightness;
 @property (nonatomic) NSMutableArray *normalizingNumbers;
-@property (nonatomic) BOOL brightnessTriggered;
 @property (nonatomic) NSTimeInterval timeBeyondThreshold;
+
+
+@property (nonatomic) int lastTotalBrightnessValue;
+@property (nonatomic) int brightnessThreshold;
 @end
 
 @implementation SSBrightnessDetector
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        [self setup];
-    }
-    return self;
++(SSBrightnessDetector*) sharedManager {
+    static dispatch_once_t pred;
+    static SSBrightnessDetector *shared;
+    
+    dispatch_once(&pred, ^{
+        shared = [[SSBrightnessDetector alloc] init];
+    });
+    return shared;
 }
 
 - (void)setup
@@ -40,6 +51,7 @@
     self.hasStarted = NO;
     self.timeBeyondThreshold = 0.f;
     self.threshold = 0.f;
+    self.lastNormBrightness = 0.f;
     self.normalizingNumbers = [[NSMutableArray alloc] init];
     [NSThread detachNewThreadSelector:@selector(initCapture) toTarget:self withObject:nil];
 }
@@ -100,6 +112,8 @@
 -(BOOL)start
 {
     if(!self.hasStarted){
+        self.lastTotalBrightnessValue = 0.f;
+        self.brightnessThreshold = BRIGHTNESS_THRESHOLD;
         [self.captureSession startRunning];
         self.hasStarted = YES;
     }
@@ -115,6 +129,7 @@
     if(self.hasStarted){
         [self.captureSession stopRunning];
         self.hasStarted = NO;
+        [self.normalizingNumbers removeAllObjects];
     }
     return self.hasStarted;
 }
@@ -133,8 +148,7 @@
     return nil;
 }
 
-#pragma mark - getBrightness and send Notification
-
+#pragma mark - getBrightness and send Notification (hybridized)
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
@@ -161,32 +175,70 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             }
         }
         CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-        totalBrightness /= 1000;
         
+        if(_lastTotalBrightnessValue==0) {
+            self.lastTotalBrightnessValue = totalBrightness;
+        }
         if ([self.normalizingNumbers count] == NORMALIZE_MAX ){
-            CGFloat normalized = (float)totalBrightness/[self getNormalizedBrightness];
-            if (normalized > 2*self.threshold){
-                if (self.timeBeyondThreshold == 0.f) {
-                    self.timeBeyondThreshold = [NSDate timeIntervalSinceReferenceDate];
-                } else if ([NSDate timeIntervalSinceReferenceDate]-self.timeBeyondThreshold > .5f) {
-                    [self normalizeWithBrightness:totalBrightness];
-                    self.threshold = (float)totalBrightness/[self getNormalizedBrightness];
+            //proceed if lens is calibrated
+            int thisBrightness = [self calculateLevelOfBrightness:totalBrightness];
+            int normalizedAverage = [self calculateLevelOfBrightness:(int)[self getNormalizedBrightness]];
+            
+            if( thisBrightness > (int).75*normalizedAverage ){
+                
+                //proceed if this brightness is at least the average of current calibration
+                //NSLog(@"%i > %i",thisBrightness,(int)[self getScaler]*normalizedAverage);
+                if(thisBrightness > (int)[self getScaler]*normalizedAverage ) {
+                    
+                    //check to how long we are above threshold & recalibrate if needed
+                    if (self.timeBeyondThreshold == 0.f) {
+                        
+                        self.timeBeyondThreshold = [NSDate timeIntervalSinceReferenceDate];
+                    } else if ([NSDate timeIntervalSinceReferenceDate]-self.timeBeyondThreshold > .75f) {
+                        
+                        //recalibrate
+                        [self.normalizingNumbers removeAllObjects];
+                    } else {
+                        
+                        //send Light ON notification
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightDetected"
+                                                                    object:nil];
+                    }
+                } else {
+                    
+                    //send Light OFF notification
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightNotDetected"
+                                                                        object:nil];
+                    self.lastTotalBrightnessValue = totalBrightness;
+                    self.timeBeyondThreshold = 0.f;
                 }
-                NSLog(@"norm: %f : thresh: %f",normalized, self.threshold);
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightDetected" object:nil];
-                self.brightnessTriggered = YES;
-            } else {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightNotDetected" object:nil];
-                [self normalizeWithBrightness:totalBrightness];
-                self.threshold = (float)totalBrightness/[self getNormalizedBrightness];
+            }else{
+                
+                //send Light OFF notification
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightNotDetected"
+                                                                    object:nil];
+                self.lastTotalBrightnessValue = totalBrightness;
                 self.timeBeyondThreshold = 0.f;
             }
         } else {
+            
+            //calibrate with given light scheme
             [self normalizeWithBrightness:totalBrightness];
-            self.threshold = (float)totalBrightness/[self getNormalizedBrightness];
+            if ([self.normalizingNumbers count] == NORMALIZE_MAX) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"hideHubForCalibration" object:nil];
+            }
+            CGFloat calibrationProgress = (float)[self.normalizingNumbers count]/NORMALIZE_MAX;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"displayHubForCalibration"
+                                                                object:nil
+                                                              userInfo:@{@"progress":[NSNumber numberWithFloat:calibrationProgress]
+                                                                         }];
         }
     }
-    
+}
+
+-(int) calculateLevelOfBrightness:(int) pCurrentBrightness
+{
+    return (pCurrentBrightness*100) /self.lastTotalBrightnessValue;
 }
 
 #pragma mark - Normalizing
@@ -202,6 +254,11 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if ([self.normalizingNumbers count] > NORMALIZE_MAX){
         [self.normalizingNumbers removeLastObject];
     }
+}
+
+-(CGFloat) getScaler {
+    NSLog(@"%li",(long)[self getNormalizedBrightness]);
+    return 2.f;
 }
 
 #pragma mark -John Clem amazingness

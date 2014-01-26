@@ -10,9 +10,16 @@
 
 @interface SSMorseButton : UIButton
 
+//sets the current button color to mark to cancel
 -(void) setCancel;
+
+//sets the current button color to mark to transmit
 -(void) setTransmit;
+
+//sets the current button color to mark to receive
 -(void) setReceive;
+
+//sets the current button color to mark as disabled
 -(void) setDisabled;
 
 @end

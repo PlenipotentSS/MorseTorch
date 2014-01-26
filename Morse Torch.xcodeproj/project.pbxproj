@@ -32,6 +32,7 @@
 		D280F10D1890995600FDC137 /* SSTorchAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F10C1890995600FDC137 /* SSTorchAccess.m */; };
 		D280F1101890AC2600FDC137 /* SSProgressViewRingGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */; };
 		D29A2A0B188DF5E4009FA15E /* UIColor+MorseTorch.m in Sources */ = {isa = PBXBuildFile; fileRef = D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */; };
+		D2DE95ED1894EA8800ECEF7F /* SSResponsiveScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DE95EC1894EA8800ECEF7F /* SSResponsiveScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,8 @@
 		D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSProgressViewRingGradient.m; sourceTree = "<group>"; };
 		D29A2A09188DF5E4009FA15E /* UIColor+MorseTorch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MorseTorch.h"; sourceTree = "<group>"; };
 		D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MorseTorch.m"; sourceTree = "<group>"; };
+		D2DE95EB1894EA8800ECEF7F /* SSResponsiveScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSResponsiveScrollView.h; sourceTree = "<group>"; };
+		D2DE95EC1894EA8800ECEF7F /* SSResponsiveScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSResponsiveScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,11 +157,9 @@
 				D211D7DA188DC1D600EA0A42 /* Images.xcassets */,
 				D211D7FF188DC89E00EA0A42 /* Constants.h */,
 				D211D800188DC89E00EA0A42 /* Constants.m */,
-				D22B18AC18930B6B0043D7A0 /* SSBrightnessDetector.h */,
-				D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */,
-				D280F1111890AC2F00FDC137 /* Subclasses */,
 				D29A2A68188F4EBC009FA15E /* Model */,
 				D211D7FE188DC48C00EA0A42 /* Views */,
+				D2DE95EA1894EA2A00ECEF7F /* Controller */,
 				D211D7FD188DC48400EA0A42 /* Categories */,
 				D211D7C9188DC1D600EA0A42 /* Supporting Files */,
 			);
@@ -208,36 +209,40 @@
 		D211D7FE188DC48C00EA0A42 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D280F10518908F9700FDC137 /* SSViewController.h */,
-				D280F10618908F9700FDC137 /* SSViewController.m */,
-				D280F1021890825400FDC137 /* SSPageViewController.h */,
-				D280F1031890825400FDC137 /* SSPageViewController.m */,
-				D211D7F7188DC34100EA0A42 /* InputViewController.h */,
-				D211D7F8188DC34100EA0A42 /* InputViewController.m */,
-				D280F108189091C200FDC137 /* SSReceiveViewController.h */,
-				D280F109189091C200FDC137 /* SSReceiveViewController.m */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		D280F1111890AC2F00FDC137 /* Subclasses */ = {
-			isa = PBXGroup;
-			children = (
-				D280F10E1890AC2600FDC137 /* SSProgressViewRingGradient.h */,
-				D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */,
 				D22B18B0189315290043D7A0 /* SSMorseButton.h */,
 				D22B18B1189315290043D7A0 /* SSMorseButton.m */,
+				D2DE95EB1894EA8800ECEF7F /* SSResponsiveScrollView.h */,
+				D2DE95EC1894EA8800ECEF7F /* SSResponsiveScrollView.m */,
 			);
-			name = Subclasses;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		D29A2A68188F4EBC009FA15E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D22B18AC18930B6B0043D7A0 /* SSBrightnessDetector.h */,
+				D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */,
 				D280F10B1890995600FDC137 /* SSTorchAccess.h */,
 				D280F10C1890995600FDC137 /* SSTorchAccess.m */,
+				D280F10E1890AC2600FDC137 /* SSProgressViewRingGradient.h */,
+				D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		D2DE95EA1894EA2A00ECEF7F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D280F1021890825400FDC137 /* SSPageViewController.h */,
+				D280F1031890825400FDC137 /* SSPageViewController.m */,
+				D280F10518908F9700FDC137 /* SSViewController.h */,
+				D280F10618908F9700FDC137 /* SSViewController.m */,
+				D211D7F7188DC34100EA0A42 /* InputViewController.h */,
+				D211D7F8188DC34100EA0A42 /* InputViewController.m */,
+				D280F108189091C200FDC137 /* SSReceiveViewController.h */,
+				D280F109189091C200FDC137 /* SSReceiveViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,6 +383,7 @@
 				D211D801188DC89E00EA0A42 /* Constants.m in Sources */,
 				D280F10A189091C200FDC137 /* SSReceiveViewController.m in Sources */,
 				D280F1101890AC2600FDC137 /* SSProgressViewRingGradient.m in Sources */,
+				D2DE95ED1894EA8800ECEF7F /* SSResponsiveScrollView.m in Sources */,
 				D211D7D3188DC1D600EA0A42 /* SSAppDelegate.m in Sources */,
 				D22B18B2189315290043D7A0 /* SSMorseButton.m in Sources */,
 				D280F10718908F9700FDC137 /* SSViewController.m in Sources */,

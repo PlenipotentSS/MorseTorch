@@ -27,6 +27,7 @@
     [super setSecondaryColor:thisProgressColor];
 }
 
+//returns the color between two colors given a percentage of one
 -(UIColor*) getNextColor:(CGFloat) progress {
     CGFloat r1,g1,b1,a1;
     [[UIColor getTransmitBgColor] getRed:&r1 green:&g1 blue:&b1 alpha:&a1];

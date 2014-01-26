@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface InputViewController : UIViewController
+
+//the current index in the UIPageController
 @property (nonatomic) NSUInteger pageIndex;
 
 @end
