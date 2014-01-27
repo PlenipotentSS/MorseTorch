@@ -32,15 +32,14 @@
 //local storage of current morse code being decoded
 @property (nonatomic) NSMutableArray *symbolArrays;
 
-//video view of current brightness scan
-@property (weak, nonatomic) IBOutlet UIView *flashVideoView;
-
 //scrollview for current view
 @property (weak, nonatomic) IBOutlet UIScrollView *theScrollView;
 
 //the HUD that shows the current progress of the text being sent
 @property (nonatomic) M13ProgressHUD *hudProgress;
 
+//slider providing sensitivity
+@property (weak, nonatomic) IBOutlet UISlider *sensitivitySlider;
 @end
 
 @implementation SSReceiveViewController
@@ -67,10 +66,9 @@
     self.receiveButton.layer.cornerRadius = 5;
     self.receiveButton.layer.masksToBounds = YES;
     
-    self.flashVideoView.layer.cornerRadius = 5;
-    self.flashVideoView.layer.masksToBounds = YES;
-    
     [[SSBrightnessDetector sharedManager] setup];
+    
+    [self.sensitivitySlider addTarget:self action:@selector(updateSensitivity) forControlEvents:UIControlEventValueChanged];
     
     //initialize the magicevents
     self.symbolArrays = [[NSMutableArray alloc] init];
@@ -102,6 +100,14 @@
     }
 }
 
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -IBActions
 -(IBAction)receiveButtonPressed
 {
     if (![[SSBrightnessDetector sharedManager] isReceiving]){
@@ -131,10 +137,8 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void) updateSensitivity {
+    [[SSBrightnessDetector sharedManager] setThesholdWithSensitivity:self.sensitivitySlider.value];
 }
 
 #pragma mark - SSBrightness Calibrating Notification
@@ -224,9 +228,9 @@
         
         CGFloat duration = self.flashEnded-self.flashStarted;
         NSString *symbol = @"";
-        if (duration < .2) {
+        if (duration < .25) {
             symbol = @".";
-        } else if (duration < .75) {
+        } else if (duration < 1.f) {
             symbol = @"_";
         }
         NSLog(@"%f -> %@",duration,symbol);

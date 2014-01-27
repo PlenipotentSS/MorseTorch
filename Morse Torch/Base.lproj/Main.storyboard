@@ -194,15 +194,6 @@
                                             <action selector="receiveButtonPressed" destination="ejQ-V2-xah" eventType="touchUpInside" id="cQ2-1U-Xph"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6KY-FO-4s7">
-                                        <rect key="frame" x="81" y="137" width="160" height="153"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="160" id="3B5-8c-UNI"/>
-                                            <constraint firstAttribute="height" constant="153" id="Rtu-kT-FRi"/>
-                                        </constraints>
-                                    </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Morse Code Received Appears Here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="288" translatesAutoresizingMaskIntoConstraints="NO" id="WZP-Pm-Je0">
                                         <rect key="frame" x="20" y="303" width="288" height="77"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -214,24 +205,45 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sensitivity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMg-Gr-87d">
+                                        <rect key="frame" x="20" y="225" width="78" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="78" id="FuT-Sm-OcQ"/>
+                                            <constraint firstAttribute="height" constant="21" id="QSU-h9-KDd"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="18"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-14" maxValue="14" translatesAutoresizingMaskIntoConstraints="NO" id="3QS-nX-OKA">
+                                        <rect key="frame" x="18" y="254" width="284" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33" id="nJA-P3-sNC"/>
+                                        </constraints>
+                                    </slider>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WZP-Pm-Je0" secondAttribute="trailing" constant="12" id="0iw-zr-aoJ"/>
-                                    <constraint firstItem="WZP-Pm-Je0" firstAttribute="top" secondItem="6KY-FO-4s7" secondAttribute="bottom" constant="13" id="4mR-L5-aXW"/>
                                     <constraint firstItem="WZP-Pm-Je0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rCD-ls-5sT" secondAttribute="leading" constant="20" id="7gQ-dR-Jif"/>
                                     <constraint firstItem="MfH-MM-FPV" firstAttribute="top" secondItem="rCD-ls-5sT" secondAttribute="top" constant="20" id="D3v-Uy-G3Z"/>
                                     <constraint firstAttribute="trailing" secondItem="MfH-MM-FPV" secondAttribute="trailing" constant="20" id="Hoi-tA-u4g"/>
+                                    <constraint firstItem="3QS-nX-OKA" firstAttribute="leading" secondItem="rCD-ls-5sT" secondAttribute="leading" constant="20" id="Jek-o0-7UM"/>
                                     <constraint firstItem="WZP-Pm-Je0" firstAttribute="leading" secondItem="rCD-ls-5sT" secondAttribute="leading" constant="20" id="KgE-Q4-4h6"/>
                                     <constraint firstItem="MfH-MM-FPV" firstAttribute="leading" secondItem="rCD-ls-5sT" secondAttribute="leading" constant="20" id="NdO-pB-yyt"/>
-                                    <constraint firstItem="kaZ-zS-jQe" firstAttribute="centerX" secondItem="6KY-FO-4s7" secondAttribute="centerX" id="SAk-e8-IGO"/>
+                                    <constraint firstItem="YMg-Gr-87d" firstAttribute="top" secondItem="kaZ-zS-jQe" secondAttribute="bottom" constant="101" id="QJk-jn-tUX"/>
+                                    <constraint firstItem="WZP-Pm-Je0" firstAttribute="top" secondItem="3QS-nX-OKA" secondAttribute="bottom" constant="16" id="Qfv-3p-8Sz"/>
+                                    <constraint firstItem="YMg-Gr-87d" firstAttribute="leading" secondItem="rCD-ls-5sT" secondAttribute="leading" constant="20" id="RkM-g5-C9i"/>
                                     <constraint firstItem="kaZ-zS-jQe" firstAttribute="leading" secondItem="rCD-ls-5sT" secondAttribute="leading" constant="81" id="Yrj-so-tmd"/>
                                     <constraint firstItem="kaZ-zS-jQe" firstAttribute="top" secondItem="MfH-MM-FPV" secondAttribute="bottom" constant="17" id="ec5-lb-hhq"/>
                                     <constraint firstAttribute="centerX" secondItem="kaZ-zS-jQe" secondAttribute="centerX" constant="-1" id="fP2-Lv-Eic"/>
-                                    <constraint firstItem="6KY-FO-4s7" firstAttribute="top" secondItem="kaZ-zS-jQe" secondAttribute="bottom" constant="13" id="gEg-Lf-4o9"/>
                                     <constraint firstAttribute="trailing" secondItem="kaZ-zS-jQe" secondAttribute="trailing" constant="79" id="h5U-iR-ZMg"/>
                                     <constraint firstAttribute="trailing" secondItem="WZP-Pm-Je0" secondAttribute="trailing" constant="12" id="hRn-jS-EHX"/>
+                                    <constraint firstItem="3QS-nX-OKA" firstAttribute="top" secondItem="YMg-Gr-87d" secondAttribute="bottom" constant="8" id="pr0-3A-kGI"/>
                                     <constraint firstAttribute="centerX" secondItem="MfH-MM-FPV" secondAttribute="centerX" id="vsp-ZH-iXR"/>
                                     <constraint firstAttribute="bottom" secondItem="WZP-Pm-Je0" secondAttribute="bottom" constant="95" id="xrG-SN-20N"/>
+                                    <constraint firstAttribute="trailing" secondItem="3QS-nX-OKA" secondAttribute="trailing" constant="20" id="zj4-aO-LfZ"/>
                                 </constraints>
                             </scrollView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Decoded Message Appears Here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="288" translatesAutoresizingMaskIntoConstraints="NO" id="j5A-i6-8Dd">
@@ -259,10 +271,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="0DT-1n-F0N"/>
                     <connections>
-                        <outlet property="flashVideoView" destination="6KY-FO-4s7" id="Lc2-9n-PUD"/>
                         <outlet property="morseText" destination="WZP-Pm-Je0" id="Kzb-4e-BSf"/>
                         <outlet property="receiveButton" destination="kaZ-zS-jQe" id="sgt-sM-He6"/>
                         <outlet property="receivedText" destination="j5A-i6-8Dd" id="6Qd-1K-UTt"/>
+                        <outlet property="sensitivitySlider" destination="3QS-nX-OKA" id="srl-dX-qWJ"/>
                         <outlet property="theScrollView" destination="rCD-ls-5sT" id="Cvh-PG-VRB"/>
                     </connections>
                 </viewController>

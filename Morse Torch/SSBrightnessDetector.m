@@ -14,27 +14,41 @@
 #import <AVFoundation/AVFoundation.h>
 
 #define NORMALIZE_MAX 25
-#define BRIGHTNESS_THRESHOLD 70
-#define MIN_BRIGHTNESS_THRESHOLD 10
+#define BRIGHTNESS_THRESHOLD 115
+#define MIN_BRIGHTNESS_THRESHOLD 95
 
 #define LOW_LIGHT_CONDITIONS_MAX 
 #define AVG_LIGHT_CONDITIONS_MAX
 #define HIGH_LIGHT_CONDITIONS_MAX
 
 @interface SSBrightnessDetector() <AVCaptureAudioDataOutputSampleBufferDelegate>
+
+//session to capture brightness
 @property (nonatomic) AVCaptureSession *captureSession;
+
+//bool containing session hasStarted
 @property (nonatomic) BOOL hasStarted;
+
+//bool containing whether normalization has finished and is ready to receive data
 @property (nonatomic) BOOL normalizationFinished;
-@property (nonatomic) CGFloat threshold;
-@property (nonatomic) CGFloat lastNormBrightness;
+
+//the calibration brightness average
 @property (nonatomic) CGFloat thisCalibrationAvg;
+
+//the array of all calibrated brightness values
 @property (nonatomic) NSMutableArray *calibrationNumbers;
+
+//the time evaluated that the brightness is beyond the threshold
 @property (nonatomic) NSTimeInterval timeBeyondThreshold;
 
+//the matrix of brightness RGB values in the given camera view
 @property (nonatomic) NSMutableArray *brightnessMatrix;
 
+//the last brightness value below the threshold
 @property (nonatomic) int lastTotalBrightnessValue;
+
 @property (nonatomic) int brightnessThreshold;
+
 @end
 
 @implementation SSBrightnessDetector
@@ -53,8 +67,7 @@
 {
     self.hasStarted = NO;
     self.timeBeyondThreshold = 0.f;
-    self.threshold = 0.f;
-    self.lastNormBrightness = 0.f;
+    self.brightnessThreshold = BRIGHTNESS_THRESHOLD;
     self.calibrationNumbers = [[NSMutableArray alloc] init];
     [NSThread detachNewThreadSelector:@selector(initCapture) toTarget:self withObject:nil];
 }
@@ -139,9 +152,12 @@
 -(void) resetCalibration {
     self.brightnessMatrix = [NSMutableArray new];
     self.normalizationFinished = NO;
-    self.lastNormBrightness = 0.f;
     self.lastTotalBrightnessValue = 0.f;
-    self.brightnessThreshold = BRIGHTNESS_THRESHOLD;
+}
+
+-(void) setThesholdWithSensitivity: (CGFloat) sensitivity; {
+    self.brightnessThreshold = BRIGHTNESS_THRESHOLD+sensitivity;
+    NSLog(@"%i",self.brightnessThreshold);
 }
 
 
@@ -210,9 +226,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                     }
                 } else {
                     //calibration exists
-                    if (thisBrightness <2*[[row objectAtIndex:counter_column] intValue]) {
-                        thisBrightness = thisBrightness-[[row objectAtIndex:counter_column] intValue];
-                    }
+//                    if (thisBrightness <2*[[row objectAtIndex:counter_column] intValue]) {
+//                        thisBrightness = thisBrightness-[[row objectAtIndex:counter_column] intValue];
+//                    }
                 }
                 totalBrightness += thisBrightness;
                 
@@ -242,7 +258,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         if (!self.normalizationFinished) {
             int thisBrightness = [self calculateLevelOfBrightness:totalBrightness];
             
-            NSLog(@"%i",thisBrightness);
             if (thisBrightness == 100) {
                 self.normalizationFinished = YES;
             } else {
@@ -252,16 +267,19 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         } else {
             //proceed if lens is calibrated
             int thisBrightness = [self calculateLevelOfBrightness:totalBrightness];
+            
             NSLog(@"%i",thisBrightness);
-            if( thisBrightness > 95 ){
+            
+            if( thisBrightness > MIN_BRIGHTNESS_THRESHOLD ){
                 
-                if(thisBrightness > 150 ) {
+                if(thisBrightness > self.brightnessThreshold ) {
                     
                     //check to how long we are above threshold & recalibrate if needed
                     if (self.timeBeyondThreshold == 0.f) {
                         
                         self.timeBeyondThreshold = [NSDate timeIntervalSinceReferenceDate];
-                    } else if ([NSDate timeIntervalSinceReferenceDate]-self.timeBeyondThreshold > .75f) {
+                    }
+                    if ([NSDate timeIntervalSinceReferenceDate]-self.timeBeyondThreshold > 2.f) {
                         
                         //recalibrate
                         self.brightnessMatrix = [NSMutableArray new];

@@ -21,4 +21,6 @@
 -(BOOL)start;
 -(BOOL)stop;
 -(BOOL)isReceiving;
+
+-(void)setThesholdWithSensitivity:(CGFloat) sensitivity;
 @end
