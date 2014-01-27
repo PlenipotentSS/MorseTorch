@@ -156,8 +156,7 @@
 }
 
 -(void) setThesholdWithSensitivity: (CGFloat) sensitivity; {
-    self.brightnessThreshold = BRIGHTNESS_THRESHOLD+sensitivity;
-    NSLog(@"%i",self.brightnessThreshold);
+    self.brightnessThreshold = BRIGHTNESS_THRESHOLD-sensitivity;
 }
 
 
@@ -174,7 +173,7 @@
     return nil;
 }
 
-#pragma mark - getBrightness and send Notification (hybridized)
+#pragma mark - AVCaptureAudioDataOutputSampleBuffer getBrightness and send Notification (hybridized)
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
@@ -211,7 +210,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             //cycle through columns at row
             int counter_column = 0;
             for (UInt8 *p = rowStart; counter_column<width; p += 4, counter_column++){
-                
                 UInt32 thisBrightness = (.299*p[0] + .587*p[1] + .116*p[2]);
                 if ([self.calibrationNumbers count] < NORMALIZE_MAX) {
                     //calibrate matrix
@@ -224,11 +222,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                         //if first time matrix is created
                         [row addObject:[NSNumber numberWithInt:thisBrightness]];
                     }
-                } else {
-                    //calibration exists
-//                    if (thisBrightness <2*[[row objectAtIndex:counter_column] intValue]) {
-//                        thisBrightness = thisBrightness-[[row objectAtIndex:counter_column] intValue];
-//                    }
                 }
                 totalBrightness += thisBrightness;
                 
@@ -268,7 +261,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             //proceed if lens is calibrated
             int thisBrightness = [self calculateLevelOfBrightness:totalBrightness];
             
-            NSLog(@"%i",thisBrightness);
+            //NSLog(@"%i",thisBrightness);
             
             if( thisBrightness > MIN_BRIGHTNESS_THRESHOLD ){
                 
@@ -328,20 +321,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     return (pCurrentBrightness*100) /self.lastTotalBrightnessValue;
 }
 
-#pragma mark - Normalizing
--(NSInteger) getCalibratedAvgBrightness {
-    if (self.thisCalibrationAvg == 0.f) {
-        NSNumber *sum = [self.calibrationNumbers valueForKeyPath:@"@sum.self"];
-        self.thisCalibrationAvg = [sum integerValue]/[self.calibrationNumbers count];
-    }
-    return self.thisCalibrationAvg;
-}
-
-
 -(void) normalizeWithBrightness:(NSInteger) thisBrightness {
-    [self.calibrationNumbers insertObject:[NSNumber numberWithInteger:thisBrightness] atIndex:0];
-    if ([self.calibrationNumbers count] > NORMALIZE_MAX){
-        [self.calibrationNumbers removeLastObject];
+    if ([self.calibrationNumbers count] < NORMALIZE_MAX){
+        [self.calibrationNumbers insertObject:[NSNumber numberWithInteger:thisBrightness] atIndex:0];
     }
 }
 

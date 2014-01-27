@@ -111,7 +111,6 @@
 -(IBAction)receiveButtonPressed
 {
     if (![[SSBrightnessDetector sharedManager] isReceiving]){
-        NSLog(@"Magic Events Reader");
         [[SSBrightnessDetector sharedManager] start];
         [self.receiveButton  setCancel];
         
@@ -133,7 +132,6 @@
         if (self.hudProgress) {
             [self resetHUD];
         }
-        NSLog(@"%@",self.symbolArrays);
     }
 }
 
@@ -233,7 +231,9 @@
         } else if (duration < 1.f) {
             symbol = @"_";
         }
-        NSLog(@"%f -> %@",duration,symbol);
+        
+        //NSLog(@"%f -> %@",duration,symbol);
+        
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             NSString *textSoFar = self.morseText.text;
             [self.morseText setText:[NSString stringWithFormat:@"%@%@",textSoFar,symbol]];
