@@ -117,38 +117,38 @@
 		D280F10C1890995600FDC137 /* SSTorchAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTorchAccess.m; sourceTree = "<group>"; };
 		D280F10E1890AC2600FDC137 /* SSProgressViewRingGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSProgressViewRingGradient.h; sourceTree = "<group>"; };
 		D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSProgressViewRingGradient.m; sourceTree = "<group>"; };
-		D290E730189AD7C2002F59E9 /* M13ProgressConsole.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressConsole.h; path = Classes/Console/M13ProgressConsole.h; sourceTree = "<group>"; };
-		D290E731189AD7C2002F59E9 /* M13ProgressConsole.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressConsole.m; path = Classes/Console/M13ProgressConsole.m; sourceTree = "<group>"; };
-		D290E732189AD7C2002F59E9 /* M13ProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressHUD.h; path = Classes/HUD/M13ProgressHUD.h; sourceTree = "<group>"; };
-		D290E733189AD7C2002F59E9 /* M13ProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressHUD.m; path = Classes/HUD/M13ProgressHUD.m; sourceTree = "<group>"; };
-		D290E734189AD7C2002F59E9 /* M13ProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressView.h; path = Classes/ProgressViews/M13ProgressView.h; sourceTree = "<group>"; };
-		D290E735189AD7C2002F59E9 /* M13ProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressView.m; path = Classes/ProgressViews/M13ProgressView.m; sourceTree = "<group>"; };
-		D290E736189AD7C2002F59E9 /* M13ProgressViewBar.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewBar.h; path = Classes/ProgressViews/M13ProgressViewBar.h; sourceTree = "<group>"; };
-		D290E737189AD7C2002F59E9 /* M13ProgressViewBar.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewBar.m; path = Classes/ProgressViews/M13ProgressViewBar.m; sourceTree = "<group>"; };
-		D290E738189AD7C2002F59E9 /* M13ProgressViewBorderedBar.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewBorderedBar.h; path = Classes/ProgressViews/M13ProgressViewBorderedBar.h; sourceTree = "<group>"; };
-		D290E739189AD7C2002F59E9 /* M13ProgressViewBorderedBar.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewBorderedBar.m; path = Classes/ProgressViews/M13ProgressViewBorderedBar.m; sourceTree = "<group>"; };
-		D290E73A189AD7C2002F59E9 /* M13ProgressViewFilteredImage.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewFilteredImage.h; path = Classes/ProgressViews/M13ProgressViewFilteredImage.h; sourceTree = "<group>"; };
-		D290E73B189AD7C2002F59E9 /* M13ProgressViewFilteredImage.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewFilteredImage.m; path = Classes/ProgressViews/M13ProgressViewFilteredImage.m; sourceTree = "<group>"; };
-		D290E73C189AD7C2002F59E9 /* M13ProgressViewImage.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewImage.h; path = Classes/ProgressViews/M13ProgressViewImage.h; sourceTree = "<group>"; };
-		D290E73D189AD7C2002F59E9 /* M13ProgressViewImage.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewImage.m; path = Classes/ProgressViews/M13ProgressViewImage.m; sourceTree = "<group>"; };
-		D290E73E189AD7C2002F59E9 /* M13ProgressViewPie.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewPie.h; path = Classes/ProgressViews/M13ProgressViewPie.h; sourceTree = "<group>"; };
-		D290E73F189AD7C2002F59E9 /* M13ProgressViewPie.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewPie.m; path = Classes/ProgressViews/M13ProgressViewPie.m; sourceTree = "<group>"; };
-		D290E740189AD7C2002F59E9 /* M13ProgressViewRing.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewRing.h; path = Classes/ProgressViews/M13ProgressViewRing.h; sourceTree = "<group>"; };
-		D290E741189AD7C2002F59E9 /* M13ProgressViewRing.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewRing.m; path = Classes/ProgressViews/M13ProgressViewRing.m; sourceTree = "<group>"; };
-		D290E742189AD7C2002F59E9 /* M13ProgressViewSegmentedBar.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewSegmentedBar.h; path = Classes/ProgressViews/M13ProgressViewSegmentedBar.h; sourceTree = "<group>"; };
-		D290E743189AD7C2002F59E9 /* M13ProgressViewSegmentedBar.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewSegmentedBar.m; path = Classes/ProgressViews/M13ProgressViewSegmentedBar.m; sourceTree = "<group>"; };
-		D290E744189AD7C2002F59E9 /* M13ProgressViewSegmentedRing.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewSegmentedRing.h; path = Classes/ProgressViews/M13ProgressViewSegmentedRing.h; sourceTree = "<group>"; };
-		D290E745189AD7C2002F59E9 /* M13ProgressViewSegmentedRing.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewSegmentedRing.m; path = Classes/ProgressViews/M13ProgressViewSegmentedRing.m; sourceTree = "<group>"; };
-		D290E746189AD7C2002F59E9 /* M13ProgressViewStripedBar.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewStripedBar.h; path = Classes/ProgressViews/M13ProgressViewStripedBar.h; sourceTree = "<group>"; };
-		D290E747189AD7C2002F59E9 /* M13ProgressViewStripedBar.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = M13ProgressViewStripedBar.m; path = Classes/ProgressViews/M13ProgressViewStripedBar.m; sourceTree = "<group>"; };
-		D290E748189AD7C2002F59E9 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = "UIImage+ImageEffects.h"; path = "Classes/HUD/UIImage+ImageEffects.h"; sourceTree = "<group>"; };
-		D290E749189AD7C2002F59E9 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = "UIImage+ImageEffects.m"; path = "Classes/HUD/UIImage+ImageEffects.m"; sourceTree = "<group>"; };
-		D290E74A189AD7C2002F59E9 /* UINavigationController+M13ProgressViewBar.h */ = {isa = PBXFileReference; lastKnownFileType = file; name = "UINavigationController+M13ProgressViewBar.h"; path = "Classes/NavigationController/UINavigationController+M13ProgressViewBar.h"; sourceTree = "<group>"; };
-		D290E74B189AD7C2002F59E9 /* UINavigationController+M13ProgressViewBar.m */ = {isa = PBXFileReference; lastKnownFileType = file; name = "UINavigationController+M13ProgressViewBar.m"; path = "Classes/NavigationController/UINavigationController+M13ProgressViewBar.m"; sourceTree = "<group>"; };
-		D290E74C189AD7C2002F59E9 /* Pods-M13ProgressSuite.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pods-M13ProgressSuite.xcconfig"; sourceTree = "<group>"; };
-		D290E74D189AD7C2002F59E9 /* Pods-M13ProgressSuite-Private.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pods-M13ProgressSuite-Private.xcconfig"; sourceTree = "<group>"; };
-		D290E74E189AD7C2002F59E9 /* Pods-M13ProgressSuite-dummy.m */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pods-M13ProgressSuite-dummy.m"; sourceTree = "<group>"; };
-		D290E74F189AD7C2002F59E9 /* Pods-M13ProgressSuite-prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pods-M13ProgressSuite-prefix.pch"; sourceTree = "<group>"; };
+		D290E730189AD7C2002F59E9 /* M13ProgressConsole.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressConsole.h; path = Classes/Console/M13ProgressConsole.h; sourceTree = "<group>"; };
+		D290E731189AD7C2002F59E9 /* M13ProgressConsole.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressConsole.m; path = Classes/Console/M13ProgressConsole.m; sourceTree = "<group>"; };
+		D290E732189AD7C2002F59E9 /* M13ProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressHUD.h; path = Classes/HUD/M13ProgressHUD.h; sourceTree = "<group>"; };
+		D290E733189AD7C2002F59E9 /* M13ProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressHUD.m; path = Classes/HUD/M13ProgressHUD.m; sourceTree = "<group>"; };
+		D290E734189AD7C2002F59E9 /* M13ProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressView.h; path = Classes/ProgressViews/M13ProgressView.h; sourceTree = "<group>"; };
+		D290E735189AD7C2002F59E9 /* M13ProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressView.m; path = Classes/ProgressViews/M13ProgressView.m; sourceTree = "<group>"; };
+		D290E736189AD7C2002F59E9 /* M13ProgressViewBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressViewBar.h; path = Classes/ProgressViews/M13ProgressViewBar.h; sourceTree = "<group>"; };
+		D290E737189AD7C2002F59E9 /* M13ProgressViewBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressViewBar.m; path = Classes/ProgressViews/M13ProgressViewBar.m; sourceTree = "<group>"; };
+		D290E738189AD7C2002F59E9 /* M13ProgressViewBorderedBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressViewBorderedBar.h; path = Classes/ProgressViews/M13ProgressViewBorderedBar.h; sourceTree = "<group>"; };
+		D290E739189AD7C2002F59E9 /* M13ProgressViewBorderedBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressViewBorderedBar.m; path = Classes/ProgressViews/M13ProgressViewBorderedBar.m; sourceTree = "<group>"; };
+		D290E73A189AD7C2002F59E9 /* M13ProgressViewFilteredImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressViewFilteredImage.h; path = Classes/ProgressViews/M13ProgressViewFilteredImage.h; sourceTree = "<group>"; };
+		D290E73B189AD7C2002F59E9 /* M13ProgressViewFilteredImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressViewFilteredImage.m; path = Classes/ProgressViews/M13ProgressViewFilteredImage.m; sourceTree = "<group>"; };
+		D290E73C189AD7C2002F59E9 /* M13ProgressViewImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressViewImage.h; path = Classes/ProgressViews/M13ProgressViewImage.h; sourceTree = "<group>"; };
+		D290E73D189AD7C2002F59E9 /* M13ProgressViewImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressViewImage.m; path = Classes/ProgressViews/M13ProgressViewImage.m; sourceTree = "<group>"; };
+		D290E73E189AD7C2002F59E9 /* M13ProgressViewPie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressViewPie.h; path = Classes/ProgressViews/M13ProgressViewPie.h; sourceTree = "<group>"; };
+		D290E73F189AD7C2002F59E9 /* M13ProgressViewPie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressViewPie.m; path = Classes/ProgressViews/M13ProgressViewPie.m; sourceTree = "<group>"; };
+		D290E740189AD7C2002F59E9 /* M13ProgressViewRing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressViewRing.h; path = Classes/ProgressViews/M13ProgressViewRing.h; sourceTree = "<group>"; };
+		D290E741189AD7C2002F59E9 /* M13ProgressViewRing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressViewRing.m; path = Classes/ProgressViews/M13ProgressViewRing.m; sourceTree = "<group>"; };
+		D290E742189AD7C2002F59E9 /* M13ProgressViewSegmentedBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressViewSegmentedBar.h; path = Classes/ProgressViews/M13ProgressViewSegmentedBar.h; sourceTree = "<group>"; };
+		D290E743189AD7C2002F59E9 /* M13ProgressViewSegmentedBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressViewSegmentedBar.m; path = Classes/ProgressViews/M13ProgressViewSegmentedBar.m; sourceTree = "<group>"; };
+		D290E744189AD7C2002F59E9 /* M13ProgressViewSegmentedRing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressViewSegmentedRing.h; path = Classes/ProgressViews/M13ProgressViewSegmentedRing.h; sourceTree = "<group>"; };
+		D290E745189AD7C2002F59E9 /* M13ProgressViewSegmentedRing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressViewSegmentedRing.m; path = Classes/ProgressViews/M13ProgressViewSegmentedRing.m; sourceTree = "<group>"; };
+		D290E746189AD7C2002F59E9 /* M13ProgressViewStripedBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = M13ProgressViewStripedBar.h; path = Classes/ProgressViews/M13ProgressViewStripedBar.h; sourceTree = "<group>"; };
+		D290E747189AD7C2002F59E9 /* M13ProgressViewStripedBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = M13ProgressViewStripedBar.m; path = Classes/ProgressViews/M13ProgressViewStripedBar.m; sourceTree = "<group>"; };
+		D290E748189AD7C2002F59E9 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+ImageEffects.h"; path = "Classes/HUD/UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		D290E749189AD7C2002F59E9 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ImageEffects.m"; path = "Classes/HUD/UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		D290E74A189AD7C2002F59E9 /* UINavigationController+M13ProgressViewBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+M13ProgressViewBar.h"; path = "Classes/NavigationController/UINavigationController+M13ProgressViewBar.h"; sourceTree = "<group>"; };
+		D290E74B189AD7C2002F59E9 /* UINavigationController+M13ProgressViewBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+M13ProgressViewBar.m"; path = "Classes/NavigationController/UINavigationController+M13ProgressViewBar.m"; sourceTree = "<group>"; };
+		D290E74C189AD7C2002F59E9 /* Pods-M13ProgressSuite.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Pods-M13ProgressSuite.xcconfig"; sourceTree = "<group>"; };
+		D290E74D189AD7C2002F59E9 /* Pods-M13ProgressSuite-Private.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Pods-M13ProgressSuite-Private.xcconfig"; sourceTree = "<group>"; };
+		D290E74E189AD7C2002F59E9 /* Pods-M13ProgressSuite-dummy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Pods-M13ProgressSuite-dummy.m"; sourceTree = "<group>"; };
+		D290E74F189AD7C2002F59E9 /* Pods-M13ProgressSuite-prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pods-M13ProgressSuite-prefix.pch"; sourceTree = "<group>"; };
 		D29A2A09188DF5E4009FA15E /* UIColor+MorseTorch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MorseTorch.h"; sourceTree = "<group>"; };
 		D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MorseTorch.m"; sourceTree = "<group>"; };
 		D2DE95EB1894EA8800ECEF7F /* SSResponsiveScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSResponsiveScrollView.h; sourceTree = "<group>"; };
@@ -366,11 +366,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D211D7F1188DC1D600EA0A42 /* Build configuration list for PBXNativeTarget "Morse Torch" */;
 			buildPhases = (
-				F2DC75D050B240379666F37E /* Check Pods Manifest.lock */,
 				D211D7BB188DC1D600EA0A42 /* Sources */,
 				D211D7BC188DC1D600EA0A42 /* Frameworks */,
 				D211D7BD188DC1D600EA0A42 /* Resources */,
-				006D3284E4074FDCA41F57F4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -485,39 +483,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		006D3284E4074FDCA41F57F4 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F2DC75D050B240379666F37E /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D211D7BB188DC1D600EA0A42 /* Sources */ = {
