@@ -11,8 +11,8 @@
 #import "SSMorseButton.h"
 #import "NSString+MorseCode.h"
 #import "SSBrightnessDetector.h"
-#import <M13ProgressSuite/M13ProgressHUD.h>
-#import <M13ProgressSuite/M13ProgressViewRing.h>
+#import <M13ProgressHUD.h>
+#import <M13ProgressViewRing.h>
 #import "SSAppDelegate.h"
 
 @interface SSReceiveViewController ()
