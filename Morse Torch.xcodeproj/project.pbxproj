@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		89C110AA18C948F38B42D0A9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC0594C437945BAAC7F8DE7 /* libPods.a */; };
 		D211D7C3188DC1D600EA0A42 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D211D7C2188DC1D600EA0A42 /* Foundation.framework */; };
 		D211D7C5188DC1D600EA0A42 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D211D7C4188DC1D600EA0A42 /* CoreGraphics.framework */; };
 		D211D7C7188DC1D600EA0A42 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D211D7C6188DC1D600EA0A42 /* UIKit.framework */; };
@@ -23,6 +24,15 @@
 		D211D7F9188DC34200EA0A42 /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7F8188DC34100EA0A42 /* InputViewController.m */; };
 		D211D7FC188DC47A00EA0A42 /* NSString+MorseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */; };
 		D211D801188DC89E00EA0A42 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D211D800188DC89E00EA0A42 /* Constants.m */; };
+		D22B18AE18930B6B0043D7A0 /* SSBrightnessDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D22B18B2189315290043D7A0 /* SSMorseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D22B18B1189315290043D7A0 /* SSMorseButton.m */; };
+		D280F1041890825400FDC137 /* SSPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F1031890825400FDC137 /* SSPageViewController.m */; };
+		D280F10718908F9700FDC137 /* SSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F10618908F9700FDC137 /* SSViewController.m */; };
+		D280F10A189091C200FDC137 /* SSReceiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F109189091C200FDC137 /* SSReceiveViewController.m */; };
+		D280F10D1890995600FDC137 /* SSTorchAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F10C1890995600FDC137 /* SSTorchAccess.m */; };
+		D280F1101890AC2600FDC137 /* SSProgressViewRingGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */; };
+		D29A2A0B188DF5E4009FA15E /* UIColor+MorseTorch.m in Sources */ = {isa = PBXBuildFile; fileRef = D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */; };
+		D2DE95ED1894EA8800ECEF7F /* SSResponsiveScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DE95EC1894EA8800ECEF7F /* SSResponsiveScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4AC0594C437945BAAC7F8DE7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D012767FCD354272A6EADE44 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D211D7BF188DC1D600EA0A42 /* Morse Torch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Morse Torch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D211D7C2188DC1D600EA0A42 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D211D7C4188DC1D600EA0A42 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -59,6 +71,24 @@
 		D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MorseCode.m"; sourceTree = "<group>"; };
 		D211D7FF188DC89E00EA0A42 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		D211D800188DC89E00EA0A42 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		D22B18AC18930B6B0043D7A0 /* SSBrightnessDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSBrightnessDetector.h; sourceTree = "<group>"; };
+		D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSBrightnessDetector.m; sourceTree = "<group>"; };
+		D22B18B0189315290043D7A0 /* SSMorseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSMorseButton.h; sourceTree = "<group>"; };
+		D22B18B1189315290043D7A0 /* SSMorseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSMorseButton.m; sourceTree = "<group>"; };
+		D280F1021890825400FDC137 /* SSPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPageViewController.h; sourceTree = "<group>"; };
+		D280F1031890825400FDC137 /* SSPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPageViewController.m; sourceTree = "<group>"; };
+		D280F10518908F9700FDC137 /* SSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSViewController.h; sourceTree = "<group>"; };
+		D280F10618908F9700FDC137 /* SSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSViewController.m; sourceTree = "<group>"; };
+		D280F108189091C200FDC137 /* SSReceiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSReceiveViewController.h; sourceTree = "<group>"; };
+		D280F109189091C200FDC137 /* SSReceiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSReceiveViewController.m; sourceTree = "<group>"; };
+		D280F10B1890995600FDC137 /* SSTorchAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTorchAccess.h; sourceTree = "<group>"; };
+		D280F10C1890995600FDC137 /* SSTorchAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTorchAccess.m; sourceTree = "<group>"; };
+		D280F10E1890AC2600FDC137 /* SSProgressViewRingGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSProgressViewRingGradient.h; sourceTree = "<group>"; };
+		D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSProgressViewRingGradient.m; sourceTree = "<group>"; };
+		D29A2A09188DF5E4009FA15E /* UIColor+MorseTorch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MorseTorch.h"; sourceTree = "<group>"; };
+		D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MorseTorch.m"; sourceTree = "<group>"; };
+		D2DE95EB1894EA8800ECEF7F /* SSResponsiveScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSResponsiveScrollView.h; sourceTree = "<group>"; };
+		D2DE95EC1894EA8800ECEF7F /* SSResponsiveScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSResponsiveScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +99,7 @@
 				D211D7C5188DC1D600EA0A42 /* CoreGraphics.framework in Frameworks */,
 				D211D7C7188DC1D600EA0A42 /* UIKit.framework in Frameworks */,
 				D211D7C3188DC1D600EA0A42 /* Foundation.framework in Frameworks */,
+				89C110AA18C948F38B42D0A9 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +123,7 @@
 				D211D7E7188DC1D600EA0A42 /* Morse TorchTests */,
 				D211D7C1188DC1D600EA0A42 /* Frameworks */,
 				D211D7C0188DC1D600EA0A42 /* Products */,
+				D012767FCD354272A6EADE44 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +143,7 @@
 				D211D7C4188DC1D600EA0A42 /* CoreGraphics.framework */,
 				D211D7C6188DC1D600EA0A42 /* UIKit.framework */,
 				D211D7E1188DC1D600EA0A42 /* XCTest.framework */,
+				4AC0594C437945BAAC7F8DE7 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -124,7 +157,9 @@
 				D211D7DA188DC1D600EA0A42 /* Images.xcassets */,
 				D211D7FF188DC89E00EA0A42 /* Constants.h */,
 				D211D800188DC89E00EA0A42 /* Constants.m */,
+				D29A2A68188F4EBC009FA15E /* Model */,
 				D211D7FE188DC48C00EA0A42 /* Views */,
+				D2DE95EA1894EA2A00ECEF7F /* Controller */,
 				D211D7FD188DC48400EA0A42 /* Categories */,
 				D211D7C9188DC1D600EA0A42 /* Supporting Files */,
 			);
@@ -165,6 +200,8 @@
 			children = (
 				D211D7FA188DC47A00EA0A42 /* NSString+MorseCode.h */,
 				D211D7FB188DC47A00EA0A42 /* NSString+MorseCode.m */,
+				D29A2A09188DF5E4009FA15E /* UIColor+MorseTorch.h */,
+				D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -172,10 +209,40 @@
 		D211D7FE188DC48C00EA0A42 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D211D7F7188DC34100EA0A42 /* InputViewController.h */,
-				D211D7F8188DC34100EA0A42 /* InputViewController.m */,
+				D22B18B0189315290043D7A0 /* SSMorseButton.h */,
+				D22B18B1189315290043D7A0 /* SSMorseButton.m */,
+				D2DE95EB1894EA8800ECEF7F /* SSResponsiveScrollView.h */,
+				D2DE95EC1894EA8800ECEF7F /* SSResponsiveScrollView.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		D29A2A68188F4EBC009FA15E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D280F10E1890AC2600FDC137 /* SSProgressViewRingGradient.h */,
+				D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */,
+				D280F10B1890995600FDC137 /* SSTorchAccess.h */,
+				D280F10C1890995600FDC137 /* SSTorchAccess.m */,
+				D22B18AC18930B6B0043D7A0 /* SSBrightnessDetector.h */,
+				D22B18AD18930B6B0043D7A0 /* SSBrightnessDetector.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		D2DE95EA1894EA2A00ECEF7F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D280F1021890825400FDC137 /* SSPageViewController.h */,
+				D280F1031890825400FDC137 /* SSPageViewController.m */,
+				D280F10518908F9700FDC137 /* SSViewController.h */,
+				D280F10618908F9700FDC137 /* SSViewController.m */,
+				D211D7F7188DC34100EA0A42 /* InputViewController.h */,
+				D211D7F8188DC34100EA0A42 /* InputViewController.m */,
+				D280F108189091C200FDC137 /* SSReceiveViewController.h */,
+				D280F109189091C200FDC137 /* SSReceiveViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,9 +252,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D211D7F1188DC1D600EA0A42 /* Build configuration list for PBXNativeTarget "Morse Torch" */;
 			buildPhases = (
+				F2DC75D050B240379666F37E /* Check Pods Manifest.lock */,
 				D211D7BB188DC1D600EA0A42 /* Sources */,
 				D211D7BC188DC1D600EA0A42 /* Frameworks */,
 				D211D7BD188DC1D600EA0A42 /* Resources */,
+				006D3284E4074FDCA41F57F4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -271,14 +340,56 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		006D3284E4074FDCA41F57F4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F2DC75D050B240379666F37E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D211D7BB188DC1D600EA0A42 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D280F10D1890995600FDC137 /* SSTorchAccess.m in Sources */,
+				D22B18AE18930B6B0043D7A0 /* SSBrightnessDetector.m in Sources */,
 				D211D801188DC89E00EA0A42 /* Constants.m in Sources */,
+				D280F10A189091C200FDC137 /* SSReceiveViewController.m in Sources */,
+				D280F1101890AC2600FDC137 /* SSProgressViewRingGradient.m in Sources */,
+				D2DE95ED1894EA8800ECEF7F /* SSResponsiveScrollView.m in Sources */,
 				D211D7D3188DC1D600EA0A42 /* SSAppDelegate.m in Sources */,
+				D22B18B2189315290043D7A0 /* SSMorseButton.m in Sources */,
+				D280F10718908F9700FDC137 /* SSViewController.m in Sources */,
+				D280F1041890825400FDC137 /* SSPageViewController.m in Sources */,
 				D211D7F9188DC34200EA0A42 /* InputViewController.m in Sources */,
+				D29A2A0B188DF5E4009FA15E /* UIColor+MorseTorch.m in Sources */,
 				D211D7CF188DC1D600EA0A42 /* main.m in Sources */,
 				D211D7FC188DC47A00EA0A42 /* NSString+MorseCode.m in Sources */,
 			);
@@ -404,6 +515,7 @@
 		};
 		D211D7F2188DC1D600EA0A42 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D012767FCD354272A6EADE44 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -417,6 +529,7 @@
 		};
 		D211D7F3188DC1D600EA0A42 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D012767FCD354272A6EADE44 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

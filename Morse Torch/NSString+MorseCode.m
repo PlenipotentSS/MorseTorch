@@ -45,13 +45,18 @@
     return [[self symbolLetterDictionary] objectForKey:letter];
 }
 
-+(NSString*) letterForSymbol: (NSString *) symbol {
++(NSString*) letterForMorseWord: (NSString *) symbol {
     //1->1 map ensures array of length 1
     NSArray *letters = [[self symbolLetterDictionary] allKeysForObject:symbol];
-    return letters[0];
+    if ([letters count] == 1) {
+        return letters[0];
+    }
+    return symbol;
 }
 
 +(NSDictionary*) symbolLetterDictionary {
+    NSSet *temp = [[NSSet alloc] init];
+    [temp setValue:@"a" forKey:@"1"];
     NSDictionary *theDictionary = @{@"A":SYMBOL_FOR_A,
                                     @"B":SYMBOL_FOR_B,
                                     @"C":SYMBOL_FOR_C,
@@ -87,7 +92,8 @@
                                     @"6":SYMBOL_FOR_6,
                                     @"7":SYMBOL_FOR_7,
                                     @"8":SYMBOL_FOR_8,
-                                    @"9":SYMBOL_FOR_9};
+                                    @"9":SYMBOL_FOR_9
+                                    };
     return theDictionary;
 }
 

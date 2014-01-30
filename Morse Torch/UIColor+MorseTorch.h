@@ -10,12 +10,13 @@
 
 @interface UIColor (MorseTorch)
 
+//custom color of red for cancel button
 +(UIColor*) getCancelBgColor;
 
-+(UIColor*) getCancelTintColor;
-
+//custom color of green for transmit button
 +(UIColor*) getTransmitBgColor;
 
-+(UIColor*) getTransmitTintColor;
+//some random color
++(UIColor*) randomColor;
 
 @end
