@@ -41,6 +41,9 @@
 //the time evaluated that the brightness is beyond the threshold
 @property (nonatomic) NSTimeInterval timeBeyondThreshold;
 
+//the time evaluated that the brightness is below the threshold
+@property (nonatomic) NSTimeInterval timeBelowThreshold;
+
 //the matrix of brightness RGB values in the given camera view
 @property (nonatomic) NSMutableArray *brightnessMatrix;
 
@@ -107,6 +110,7 @@
     AVCaptureVideoDataOutput *videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
     
     //  pixel buffer format
+    // YUV (iOS 7 Chroma/Luminance standard) --- NOT INCLUDED
     NSDictionary *settings = [[NSDictionary alloc] initWithObjectsAndKeys:
                               [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA],
                               kCVPixelBufferPixelFormatTypeKey, nil];
@@ -150,6 +154,8 @@
 }
 
 -(void) resetCalibration {
+    self.brightnessMatrix = nil;
+    [self.brightnessMatrix release];
     self.brightnessMatrix = [NSMutableArray new];
     self.normalizationFinished = NO;
     self.lastTotalBrightnessValue = 0.f;
@@ -222,6 +228,11 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                         //if first time matrix is created
                         [row addObject:[NSNumber numberWithInt:thisBrightness]];
                     }
+                } else {
+                    //normalization
+                    if (thisBrightness > 1.15*[[row objectAtIndex:counter_column] intValue]) {
+                        thisBrightness *= 2;
+                    }
                 }
                 totalBrightness += thisBrightness;
                 
@@ -292,6 +303,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                     self.timeBeyondThreshold = 0.f;
                 }
             }else{
+                // add darker threshold re-calibrator
+//                if () {
+//                    if( self.timeBelowThreshold == 0.f) {
+//                        
+//                    }
+//                }
                 
                 //send Light OFF notification
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightNotDetected"
