@@ -131,7 +131,7 @@
                     }];
                 }
                 [self.torchQueue addOperationWithBlock:^{
-                    usleep(LETTER_DELAY_IN_MICROSEC);
+                    usleep(INTER_FLASH_DELAY_IN_MICROSEC);
                 }];
             }
             [self.torchQueue addOperationWithBlock:^{

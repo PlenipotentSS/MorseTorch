@@ -142,29 +142,29 @@
 
 #pragma mark - SSBrightness Calibrating Notification
 -(void) displayHubForCalibration:(NSNotification *) notification {
-//    if (!self.hudProgress) {
-//        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
-//            self.hudProgress = [[M13ProgressHUD alloc] initWithProgressView:[[M13ProgressViewRing alloc] init]];
-//            self.hudProgress.progressViewSize = CGSizeMake(60.0, 60.0);
-//            [self.view addSubview:self.hudProgress];
-//            self.hudProgress.status = @"Calibrating";
-//            
-//            [self.hudProgress show:YES];
-//        }];
-//    }else {
-//        CGFloat caliProgress = [(NSNumber*)[[notification userInfo] objectForKey:@"progress"] floatValue];
-//        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
-//            [self.hudProgress setProgress:caliProgress animated:YES];
-//        }];
-//    }
+    if (!self.hudProgress) {
+        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
+            self.hudProgress = [[M13ProgressHUD alloc] initWithProgressView:[[M13ProgressViewRing alloc] init]];
+            self.hudProgress.progressViewSize = CGSizeMake(60.0, 60.0);
+            [self.view addSubview:self.hudProgress];
+            self.hudProgress.status = @"Calibrating";
+            
+            [self.hudProgress show:YES];
+        }];
+    }else {
+        CGFloat caliProgress = [(NSNumber*)[[notification userInfo] objectForKey:@"progress"] floatValue];
+        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
+            [self.hudProgress setProgress:caliProgress animated:YES];
+        }];
+    }
 }
 
 -(void) hideHubForCalibration:(NSNotification *) notification {
-//    if (self.hudProgress) {
-//        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
-//            [self performSelector:@selector(setCompleteHUD) withObject:nil afterDelay:self.hudProgress.animationDuration + .1];
-//        }];
-//    }
+    if (self.hudProgress) {
+        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
+            [self performSelector:@selector(setCompleteHUD) withObject:nil afterDelay:self.hudProgress.animationDuration + .1];
+        }];
+    }
 }
 
 -(void) setCompleteHUD {
@@ -233,7 +233,7 @@
             symbol = @"_";
         }
         
-        NSLog(@"duration: %f",duration);
+        NSLog(@"duration: %f symbol: %@",duration,symbol);
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             NSString *textSoFar = self.morseText.text;

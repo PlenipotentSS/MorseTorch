@@ -46,6 +46,6 @@ extern NSString * const SYMBOL_FOR_9;
 
 extern CGFloat const DOT_IN_MICROSEC;
 extern CGFloat const DASH_IN_MICROSEC;
-extern CGFloat const LETTER_DELAY_IN_MICROSEC;
+extern CGFloat const INTER_FLASH_DELAY_IN_MICROSEC;
 extern CGFloat const WORD_DELAY_IN_MICROSEC;
 
