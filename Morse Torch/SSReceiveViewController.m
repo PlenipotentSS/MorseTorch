@@ -66,7 +66,8 @@
     self.receiveButton.layer.cornerRadius = 5;
     self.receiveButton.layer.masksToBounds = YES;
     
-    [[SSBrightnessDetector sharedManager] setup];
+//    [[SSBrightnessDetector sharedManager] setup];
+    [SSBrightnessDetector sharedManager];
     
     [self.sensitivitySlider addTarget:self action:@selector(updateSensitivity) forControlEvents:UIControlEventValueChanged];
     
@@ -136,34 +137,34 @@
 }
 
 -(void) updateSensitivity {
-    [[SSBrightnessDetector sharedManager] setThesholdWithSensitivity:self.sensitivitySlider.value];
+//    [[SSBrightnessDetector sharedManager] setThesholdWithSensitivity:self.sensitivitySlider.value];
 }
 
 #pragma mark - SSBrightness Calibrating Notification
 -(void) displayHubForCalibration:(NSNotification *) notification {
-    if (!self.hudProgress) {
-        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
-            self.hudProgress = [[M13ProgressHUD alloc] initWithProgressView:[[M13ProgressViewRing alloc] init]];
-            self.hudProgress.progressViewSize = CGSizeMake(60.0, 60.0);
-            [self.view addSubview:self.hudProgress];
-            self.hudProgress.status = @"Calibrating";
-            
-            [self.hudProgress show:YES];
-        }];
-    }else {
-        CGFloat caliProgress = [(NSNumber*)[[notification userInfo] objectForKey:@"progress"] floatValue];
-        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
-            [self.hudProgress setProgress:caliProgress animated:YES];
-        }];
-    }
+//    if (!self.hudProgress) {
+//        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
+//            self.hudProgress = [[M13ProgressHUD alloc] initWithProgressView:[[M13ProgressViewRing alloc] init]];
+//            self.hudProgress.progressViewSize = CGSizeMake(60.0, 60.0);
+//            [self.view addSubview:self.hudProgress];
+//            self.hudProgress.status = @"Calibrating";
+//            
+//            [self.hudProgress show:YES];
+//        }];
+//    }else {
+//        CGFloat caliProgress = [(NSNumber*)[[notification userInfo] objectForKey:@"progress"] floatValue];
+//        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
+//            [self.hudProgress setProgress:caliProgress animated:YES];
+//        }];
+//    }
 }
 
 -(void) hideHubForCalibration:(NSNotification *) notification {
-    if (self.hudProgress) {
-        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
-            [self performSelector:@selector(setCompleteHUD) withObject:nil afterDelay:self.hudProgress.animationDuration + .1];
-        }];
-    }
+//    if (self.hudProgress) {
+//        [[NSOperationQueue mainQueue ] addOperationWithBlock:^{
+//            [self performSelector:@selector(setCompleteHUD) withObject:nil afterDelay:self.hudProgress.animationDuration + .1];
+//        }];
+//    }
 }
 
 -(void) setCompleteHUD {
@@ -232,7 +233,7 @@
             symbol = @"_";
         }
         
-        //NSLog(@"%f -> %@",duration,symbol);
+        NSLog(@"duration: %f",duration);
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             NSString *textSoFar = self.morseText.text;
@@ -250,8 +251,8 @@
                 morseWord = [NSString stringWithFormat:@"%@%@",morseWord,symbol];
             }
             NSString *letter = [NSString letterForMorseWord:morseWord];
-            //NSLog(@"%@ : %@",morseWord, letter);
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                
                 //update letter field
                 NSString *textSoFar = self.receivedText.text;
                 [self.receivedText setText:[NSString stringWithFormat:@"%@ %@",textSoFar,letter]];

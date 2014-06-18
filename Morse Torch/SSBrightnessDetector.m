@@ -13,13 +13,7 @@
 #import "SSBrightnessDetector.h"
 #import <AVFoundation/AVFoundation.h>
 
-#define NORMALIZE_MAX 25
-#define BRIGHTNESS_THRESHOLD 115
-#define MIN_BRIGHTNESS_THRESHOLD 95
-
-#define LOW_LIGHT_CONDITIONS_MAX 
-#define AVG_LIGHT_CONDITIONS_MAX
-#define HIGH_LIGHT_CONDITIONS_MAX
+#define TOTAL_REQUIRED_CALIBRATION_SHOTS 10
 
 @interface SSBrightnessDetector() <AVCaptureAudioDataOutputSampleBufferDelegate>
 
@@ -29,28 +23,35 @@
 //bool containing session hasStarted
 @property (nonatomic) BOOL hasStarted;
 
-//bool containing whether normalization has finished and is ready to receive data
-@property (nonatomic) BOOL normalizationFinished;
-
-//the calibration brightness average
-@property (nonatomic) CGFloat thisCalibrationAvg;
-
-//the array of all calibrated brightness values
-@property (nonatomic) NSMutableArray *calibrationNumbers;
-
-//the time evaluated that the brightness is beyond the threshold
-@property (nonatomic) NSTimeInterval timeBeyondThreshold;
-
-//the time evaluated that the brightness is below the threshold
-@property (nonatomic) NSTimeInterval timeBelowThreshold;
-
 //the matrix of brightness RGB values in the given camera view
-@property (nonatomic) NSMutableArray *brightnessMatrix;
+//@property (nonatomic) NSMutableArray *brightnessMatrix;
 
-//the last brightness value below the threshold
-@property (nonatomic) int lastTotalBrightnessValue;
+@property (nonatomic) int currentSpeed;
 
-@property (nonatomic) int brightnessThreshold;
+
+@property (nonatomic) BOOL areViewsSetup;
+
+//first derivative values of light function
+@property (nonatomic) NSMutableArray *firstDegreeLightValues;
+
+//second derivative values of light function
+@property (nonatomic) NSMutableArray *secondDegreeLightValues;
+
+@property (nonatomic,strong) NSMutableArray *lastLightMatrix;
+
+@property (nonatomic) CGFloat lastAverageAcceleration;
+
+@property (nonatomic) BOOL peakFlag;
+
+@property (nonatomic) BOOL isCalibrated;
+
+@property (nonatomic) NSInteger numberOfCalibratedShots;
+
+@property (nonatomic) CGFloat averageOfCalibrations;
+
+@property (nonatomic) NSInteger numberOfNullNotifications;
+
+@property (nonatomic, copy) void (^notificationBlock)(void);
 
 @end
 
@@ -62,6 +63,9 @@
     
     dispatch_once(&pred, ^{
         shared = [[SSBrightnessDetector alloc] init];
+        if (!shared.captureSession) {
+            [shared setup];
+        }
     });
     return shared;
 }
@@ -69,19 +73,17 @@
 - (void)setup
 {
     self.hasStarted = NO;
-    self.timeBeyondThreshold = 0.f;
-    self.brightnessThreshold = BRIGHTNESS_THRESHOLD;
-    self.calibrationNumbers = [[NSMutableArray alloc] init];
     [NSThread detachNewThreadSelector:@selector(initCapture) toTarget:self withObject:nil];
+    
+    self.notificationBlock = ^{};
 }
 
 - (void)initCapture {
-    
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     NSError *error = nil;
     
-    AVCaptureDevice *captureDevice = [self getBackCamera];
+    AVCaptureDevice *captureDevice = [self getFrontCamera];
     [self configureCameraForHighestFrameRate:captureDevice];
     if ([captureDevice isExposureModeSupported:AVCaptureExposureModeLocked]) {
         [captureDevice lockForConfiguration:nil];
@@ -132,9 +134,11 @@
 -(BOOL)start
 {
     if(!self.hasStarted){
-        [self resetCalibration];
         [self.captureSession startRunning];
+        self.isCalibrated = NO;
+        self.numberOfCalibratedShots = 0;
         self.hasStarted = YES;
+        self.averageOfCalibrations = 0;
     }
     return self.hasStarted;
 }
@@ -148,21 +152,8 @@
     if(self.hasStarted){
         [self.captureSession stopRunning];
         self.hasStarted = NO;
-        [self.calibrationNumbers removeAllObjects];
     }
     return self.hasStarted;
-}
-
--(void) resetCalibration {
-    self.brightnessMatrix = nil;
-    [self.brightnessMatrix release];
-    self.brightnessMatrix = [NSMutableArray new];
-    self.normalizationFinished = NO;
-    self.lastTotalBrightnessValue = 0.f;
-}
-
--(void) setThesholdWithSensitivity: (CGFloat) sensitivity; {
-    self.brightnessThreshold = BRIGHTNESS_THRESHOLD-sensitivity;
 }
 
 
@@ -179,7 +170,69 @@
     return nil;
 }
 
+- (AVCaptureDevice *)getFrontCamera
+{
+    NSArray *videoDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in videoDevices)
+    {
+        if (device.position == AVCaptureDevicePositionFront)
+        {
+            return device;
+        }
+    }
+    return nil;
+}
+
+-(void)shouldUseSlowerSpeed:(BOOL)slowerSpeed
+{
+    if (slowerSpeed) {
+        self.currentSpeed = 500000;
+    } else {
+        self.currentSpeed = 10000;
+    }
+}
+
 #pragma mark - AVCaptureAudioDataOutputSampleBuffer getBrightness and send Notification (hybridized)
+- (void)sendNotifications:(CGFloat)thisAvgAcc
+{
+    if (thisAvgAcc > 1  ) { //1 may need to be the sensitivity slider!
+        self.notificationBlock = ^{
+//            NSLog(@"--------------> light received");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightDetected" object:nil];
+        };
+        
+        self.numberOfNullNotifications = 0;
+    } else if (thisAvgAcc < -15 || self.numberOfNullNotifications > 3) {
+        self.notificationBlock = ^{
+//            NSLog(@"--------------> no light");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightNotDetected" object:nil];
+        };
+        
+        self.numberOfNullNotifications = 0;
+    } else {
+        self.notificationBlock = ^{ };
+        self.numberOfNullNotifications++;
+    }
+    
+    self.notificationBlock();
+}
+
+- (void)calibrateChanges:(CGFloat)thisAvgAcc
+{
+    if (thisAvgAcc < 1 && thisAvgAcc > -1 ){
+        self.numberOfCalibratedShots++;
+        self.averageOfCalibrations += thisAvgAcc;
+    } else {
+        self.numberOfCalibratedShots = 0;
+        self.averageOfCalibrations = 0;
+    }
+    if (self.numberOfCalibratedShots > TOTAL_REQUIRED_CALIBRATION_SHOTS) {
+        self.isCalibrated = YES;
+        self.averageOfCalibrations /= TOTAL_REQUIRED_CALIBRATION_SHOTS;
+//      NSLog(@"calibrated with average: %f",self.averageOfCalibrations);
+    }
+}
+
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
@@ -187,6 +240,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     if (CVPixelBufferLockBaseAddress(imageBuffer, 0) == kCVReturnSuccess)
     {
+        
+        NSMutableArray *brightnessMatrix = [[[NSMutableArray alloc] init] autorelease];
         UInt8 *base = (UInt8 *)CVPixelBufferGetBaseAddress(imageBuffer);
         
         //  calculate average brightness in a simple way
@@ -194,155 +249,104 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         size_t bytesPerRow      = CVPixelBufferGetBytesPerRow(imageBuffer);
         size_t width            = CVPixelBufferGetWidth(imageBuffer);
         size_t height           = CVPixelBufferGetHeight(imageBuffer);
-        UInt32 totalBrightness  = 0;
         
         int counter_row=0;
         BOOL firstRun = NO;
         
-        if ([self.brightnessMatrix count] == 0) {
+        if ([brightnessMatrix count] == 0) {
             firstRun = YES;
         }
+        
+        CGFloat totalAccelerationChange = 0;
+        NSInteger totalIncreasedValues = 0;
+        CGFloat totalBrightness = 0.f;
         
         for (UInt8 *rowStart = base; counter_row < height; rowStart += bytesPerRow, counter_row++){
             
             //get last brightness at row if possible
             NSMutableArray *row;
-            if ([self.brightnessMatrix count] == height) {
-                row = [self.brightnessMatrix objectAtIndex:counter_row];
-            } else {
-                row = [NSMutableArray new];
-            }
+            row = [[NSMutableArray new] autorelease];
             
             //cycle through columns at row
             int counter_column = 0;
             for (UInt8 *p = rowStart; counter_column<width; p += 4, counter_column++){
-                UInt32 thisBrightness = (.299*p[0] + .587*p[1] + .116*p[2]);
-                if ([self.calibrationNumbers count] < NORMALIZE_MAX) {
-                    //calibrate matrix
-                    if ([row count] == width) {
-                        //if matrix has entries
-                        thisBrightness = (thisBrightness+[[row objectAtIndex:counter_column] intValue])/2;
-                        [row removeObjectAtIndex:counter_column];
-                        [row insertObject:[NSNumber numberWithInt:thisBrightness] atIndex:counter_column];
-                    } else {
-                        //if first time matrix is created
-                        [row addObject:[NSNumber numberWithInt:thisBrightness]];
-                    }
-                } else {
-                    //normalization
-                    if (thisBrightness > 1.15*[[row objectAtIndex:counter_column] intValue]) {
-                        thisBrightness *= 2;
-                    }
-                }
+                Float32 thisBrightness = (.299*p[0] + .587*p[1] + .116*p[2]);
+                [row addObject:@(thisBrightness)];
                 totalBrightness += thisBrightness;
                 
+                
+                if (self.lastLightMatrix) {
+                    
+                    NSNumber *lastBrightNumber = [[self.lastLightMatrix objectAtIndex:counter_row] objectAtIndex:counter_column];
+                    CGFloat lastBrightness = [lastBrightNumber floatValue];
+                    
+                    CGFloat brightnessChange = (thisBrightness-lastBrightness); //d(x) = f(x+1)-f(x)
+                    
+                    NSNumber *oldBrightChangeNumber = [[self.firstDegreeLightValues objectAtIndex:counter_row] objectAtIndex:counter_column];
+                    CGFloat oldBrightnessChange = [oldBrightChangeNumber floatValue];
+                    
+                    [[self.firstDegreeLightValues objectAtIndex:counter_row] replaceObjectAtIndex:counter_column withObject:@(brightnessChange)];
+                    
+                    CGFloat brightnessAcceleration = brightnessChange-oldBrightnessChange; //d(x+1)-d(x)
+                    
+                    //increased the number of changed pixels
+                    totalIncreasedValues = (brightnessAcceleration > 0 && brightnessChange > 0) ? totalIncreasedValues+1 : totalIncreasedValues;
+                    
+                    [[self.secondDegreeLightValues objectAtIndex:counter_row] replaceObjectAtIndex:counter_column withObject:@(brightnessAcceleration)];
+                    
+                    totalAccelerationChange += brightnessChange;
+                    
+                }
             }
-            
-            //put row values intro matrix
-            if ([self.brightnessMatrix count] == height) {
-                [self.brightnessMatrix removeObjectAtIndex:counter_row];
-                [self.brightnessMatrix insertObject:row atIndex:counter_row];
-            } else {
-                [self.brightnessMatrix addObject:row];
-            }
+            [brightnessMatrix insertObject:row atIndex:counter_row];
         }
+        
         CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
         
-        if (!firstRun) {
-            [self sendNotificationByBrightness:totalBrightness];
-        } else {
-            self.lastTotalBrightnessValue = totalBrightness;
-        }
-    }
-}
-
--(void)sendNotificationByBrightness: (int) totalBrightness {
-
-    if ([self.calibrationNumbers count] == NORMALIZE_MAX){
-        if (!self.normalizationFinished) {
-            int thisBrightness = [self calculateLevelOfBrightness:totalBrightness];
+        CGFloat thisAvgAcc = (totalIncreasedValues > 0) ? totalAccelerationChange/totalIncreasedValues : -INFINITY;
+        if (self.isCalibrated) {
+            //SEND NOTIFICATIONS!
             
-            if (thisBrightness == 100) {
-                self.normalizationFinished = YES;
-            } else {
-                self.lastTotalBrightnessValue = totalBrightness;
-                [self normalizeWithBrightness:totalBrightness];
+//            NSLog(@"%f",thisAvgAcc);
+            
+            [self sendNotifications:thisAvgAcc];
+        
+            
+            if (self.lastLightMatrix) {
+                self.lastLightMatrix = nil;
+                [self.lastLightMatrix release];
             }
+            self.lastAverageAcceleration = thisAvgAcc;
         } else {
-            //proceed if lens is calibrated
-            int thisBrightness = [self calculateLevelOfBrightness:totalBrightness];
-            
-            //NSLog(@"%i",thisBrightness);
-            
-            if( thisBrightness > MIN_BRIGHTNESS_THRESHOLD ){
-                
-                if(thisBrightness > self.brightnessThreshold ) {
-                    
-                    //check to how long we are above threshold & recalibrate if needed
-                    if (self.timeBeyondThreshold == 0.f) {
-                        
-                        self.timeBeyondThreshold = [NSDate timeIntervalSinceReferenceDate];
-                    }
-                    if ([NSDate timeIntervalSinceReferenceDate]-self.timeBeyondThreshold > 2.f) {
-                        
-                        //recalibrate
-                        self.brightnessMatrix = [NSMutableArray new];
-                        [self.calibrationNumbers removeAllObjects];
-                    } else {
-                        
-                        //send Light ON notification
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightDetected"
-                                                                            object:nil];
-                    }
-                } else {
-                    
-                    //send Light OFF notification
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightNotDetected"
-                                                                        object:nil];
-                    self.lastTotalBrightnessValue = totalBrightness;
-                    self.timeBeyondThreshold = 0.f;
-                }
-            }else{
-                // add darker threshold re-calibrator
-//                if () {
-//                    if( self.timeBelowThreshold == 0.f) {
-//                        
-//                    }
-//                }
-                
-                //send Light OFF notification
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"OnReceiveLightNotDetected"
-                                                                    object:nil];
-                self.lastTotalBrightnessValue = totalBrightness;
-                self.timeBeyondThreshold = 0.f;
-            }
+            [self calibrateChanges:thisAvgAcc];
         }
-    } else {
-        //calibrate with given light scheme
-        [self normalizeWithBrightness:totalBrightness];
-        if ([self.calibrationNumbers count] == NORMALIZE_MAX) {
-            self.thisCalibrationAvg = 0.f;
-            self.lastTotalBrightnessValue = totalBrightness;
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"hideHubForCalibration" object:nil];
-        }
-        CGFloat calibrationProgress = (float)[self.calibrationNumbers count]/NORMALIZE_MAX;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"displayHubForCalibration"
-                                                            object:nil
-                                                          userInfo:@{@"progress":[NSNumber numberWithFloat:calibrationProgress]
-                                                                     }];
+        self.lastLightMatrix = brightnessMatrix;
     }
 }
 
--(int) calculateLevelOfBrightness:(int) pCurrentBrightness
-{
-    return (pCurrentBrightness*100) /self.lastTotalBrightnessValue;
-}
 
--(void) normalizeWithBrightness:(NSInteger) thisBrightness {
-    if ([self.calibrationNumbers count] < NORMALIZE_MAX){
-        [self.calibrationNumbers insertObject:[NSNumber numberWithInteger:thisBrightness] atIndex:0];
-    }
-}
+//- (void)setupBase:(NSMutableArray*)lightMatrix
+//{
+//    NSLog(@"setting up arrays...");
+//    self.firstDegreeLightValues = [[[NSMutableArray alloc] init] autorelease];
+//    self.secondDegreeLightValues = [[[NSMutableArray alloc] init] autorelease];
+//    for (NSInteger i = 0; i<[lightMatrix count]; i++) {
+//        if ([self.firstDegreeLightValues count] == i ) {
+//            [self.firstDegreeLightValues addObject:[[NSMutableArray new] autorelease]];
+//            [self.secondDegreeLightValues addObject:[[NSMutableArray new] autorelease]];
+//        }
+//        
+//        NSMutableArray *row = [[lightMatrix objectAtIndex:i] autorelease];
+//        
+//        for (NSInteger j = 0; j<[row count]; j++) {
+//            
+//            [[self.firstDegreeLightValues objectAtIndex:i] addObject:@(0)];
+//            [[self.secondDegreeLightValues objectAtIndex:i] addObject:@(0)];
+//        }
+//        [self.firstDegreeLightValues objectAtIndex:i];
+//        [self.secondDegreeLightValues objectAtIndex:i];
+//    }
+//}
 
 #pragma mark -John Clem amazingness
 - (void)configureCameraForHighestFrameRate:(AVCaptureDevice *)device
