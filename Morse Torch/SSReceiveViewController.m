@@ -14,6 +14,7 @@
 #import <M13ProgressHUD.h>
 #import <M13ProgressViewRing.h>
 #import "SSAppDelegate.h"
+#import "UIDeviceHardware.h"
 
 @interface SSReceiveViewController ()
 
@@ -40,6 +41,10 @@
 
 //slider providing sensitivity
 @property (weak, nonatomic) IBOutlet UISlider *sensitivitySlider;
+
+//current device string
+@property (nonatomic) NSString *thisDevice;
+
 @end
 
 @implementation SSReceiveViewController
@@ -73,6 +78,10 @@
     
     //initialize the magicevents
     self.symbolArrays = [[NSMutableArray alloc] init];
+    
+    //current device hardware
+    NSString *hardwareType = [UIDeviceHardware platform];
+    self.thisDevice = hardwareType;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -227,7 +236,7 @@
         
         CGFloat duration = self.flashEnded-self.flashStarted;
         NSString *symbol = @"";
-        if (duration < .25) {
+        if (duration < .30) {
             symbol = @".";
         } else if (duration < 1.f) {
             symbol = @"_";

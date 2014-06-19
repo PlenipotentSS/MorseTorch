@@ -96,6 +96,7 @@
 		D290E837189B03DE002F59E9 /* Pods-M13ProgressSuite-prefix.pch in Resources */ = {isa = PBXBuildFile; fileRef = D290E815189B03DE002F59E9 /* Pods-M13ProgressSuite-prefix.pch */; };
 		D29A2A0B188DF5E4009FA15E /* UIColor+MorseTorch.m in Sources */ = {isa = PBXBuildFile; fileRef = D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */; };
 		D2C6ADE9195184C1009B3205 /* SSBrightnessDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C6ADE8195184C1009B3205 /* SSBrightnessDetector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D2C6ADEC1952ADC1009B3205 /* UIDeviceHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C6ADEB1952ADC1009B3205 /* UIDeviceHardware.m */; };
 		D2DE95ED1894EA8800ECEF7F /* SSResponsiveScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DE95EC1894EA8800ECEF7F /* SSResponsiveScrollView.m */; };
 /* End PBXBuildFile section */
 
@@ -215,6 +216,8 @@
 		D29A2A09188DF5E4009FA15E /* UIColor+MorseTorch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MorseTorch.h"; sourceTree = "<group>"; };
 		D29A2A0A188DF5E4009FA15E /* UIColor+MorseTorch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MorseTorch.m"; sourceTree = "<group>"; };
 		D2C6ADE8195184C1009B3205 /* SSBrightnessDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSBrightnessDetector.m; sourceTree = "<group>"; };
+		D2C6ADEA1952ADC1009B3205 /* UIDeviceHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDeviceHardware.h; sourceTree = "<group>"; };
+		D2C6ADEB1952ADC1009B3205 /* UIDeviceHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDeviceHardware.m; sourceTree = "<group>"; };
 		D2DE95EB1894EA8800ECEF7F /* SSResponsiveScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSResponsiveScrollView.h; sourceTree = "<group>"; };
 		D2DE95EC1894EA8800ECEF7F /* SSResponsiveScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSResponsiveScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -447,6 +450,8 @@
 		D29A2A68188F4EBC009FA15E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D2C6ADEA1952ADC1009B3205 /* UIDeviceHardware.h */,
+				D2C6ADEB1952ADC1009B3205 /* UIDeviceHardware.m */,
 				D280F10E1890AC2600FDC137 /* SSProgressViewRingGradient.h */,
 				D280F10F1890AC2600FDC137 /* SSProgressViewRingGradient.m */,
 				D280F10B1890995600FDC137 /* SSTorchAccess.h */,
@@ -640,6 +645,7 @@
 				D280F1101890AC2600FDC137 /* SSProgressViewRingGradient.m in Sources */,
 				D2DE95ED1894EA8800ECEF7F /* SSResponsiveScrollView.m in Sources */,
 				D211D7D3188DC1D600EA0A42 /* SSAppDelegate.m in Sources */,
+				D2C6ADEC1952ADC1009B3205 /* UIDeviceHardware.m in Sources */,
 				D22B18B2189315290043D7A0 /* SSMorseButton.m in Sources */,
 				D280F10718908F9700FDC137 /* SSViewController.m in Sources */,
 				D280F1041890825400FDC137 /* SSPageViewController.m in Sources */,

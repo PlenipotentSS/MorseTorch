@@ -44,7 +44,14 @@ NSString * const SYMBOL_FOR_7 = @"__...";
 NSString * const SYMBOL_FOR_8 = @"___..";
 NSString * const SYMBOL_FOR_9 = @"____.";
 
-CGFloat const DOT_IN_MICROSEC = 100000;
-CGFloat const DASH_IN_MICROSEC = 300000;
+//CGFloat const DOT_IN_MICROSEC = 150000;
+//CGFloat const DASH_IN_MICROSEC = 350000;
+//
+//CGFloat const INTER_FLASH_DELAY_IN_MICROSEC = 200000;
+//CGFloat const WORD_DELAY_IN_MICROSEC = 600000;
+
+CGFloat const DOT_IN_MICROSEC = 150000;
+CGFloat const DASH_IN_MICROSEC = 350000;
+
 CGFloat const INTER_FLASH_DELAY_IN_MICROSEC = 200000;
-CGFloat const WORD_DELAY_IN_MICROSEC = 500000;
+CGFloat const WORD_DELAY_IN_MICROSEC = 600000;
